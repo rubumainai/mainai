@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,9 +50,43 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="{{Request::is('/tagsList')?'active':null}}"><a href="{{url('/tagsList')}}"><span class="glyphicon glyphicon-heart"></span></a></li>
             <li class="{{Request::is('/myProfile')?'active':null}}"><a href="{{url('/myProfile')}}"><span class="glyphicon glyphicon-user"></span></a></li>
-            <li class="{{Request::is('/')?'active':null}}"><a href="{{url('/')}}"><span class="glyphicon glyphicon-log-out"></span></a></li>
+            <li class="{{Request::is('/logout')?'active':null}}"><a href="{{url('/logout')}}"><span class="glyphicon glyphicon-log-out"></span></a></li>
         </ul>
     </div>
 </nav>
+<form class="" action="{{URL::to('/unblock')}}" method="post">
+    @csrf
+    <div class="container">
+        <h2 style="position: center">Užblokuotų naudotojų sąrašas</h2>
+        <br>
+        <table class="table table-hover">
+            <thead>
+            <tr class="header">
+                <th>Vardas</th>
+                <th>Pavardė</th>
+                <th>El. paštas</th>
+                <th>Registracijos data</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $query = "SELECT * FROM naudotojas where tipas = 2";
+            $connect = mysqli_connect("localhost", "root", "", "mainai");
+            mysqli_query($connect,"SET NAMES 'utf8'");
+            $search_result = mysqli_query($connect, $query);
+            while($row = mysqli_fetch_array($search_result)) :?>
+            <tr>
+                <td><?php echo $row['vardas'];   $idd =$row['id_Naudotojas'];?></td>
+                <td><?php echo $row['pavarde'];?></td>
+                <td><?php echo $row['email'];?></td>
+                <td><?php echo $row['registracijos_data'];?></td>
+                <td><button type=submit name="button" value="{{$idd}}" onclick="return confirm('Ar tikrai norite atblokuoti naudotoją?')">Atblokuoti</button></td>
+            </tr>
+
+            <?php endwhile;?>
+            </tbody>
+        </table>
+    </div>
+</form>
 </body>
 </html>

@@ -56,3 +56,15 @@ Route::get('/catalog', function () {
 Route::get('/blockedUsersList', function () {
     return view('blockedUsersList');
 });
+
+Route::post('/logs', 'UserController@logs');
+
+Route::post('/store', 'UserController@store');
+
+Route::get('/logout', 'UserController@logout');
+
+Route::post('/editClient', 'UserController@editClient');
+
+Route::post('/unblock', 'AdminController@unblock');
+
+Route::post('/block', 'AdminController@block');
