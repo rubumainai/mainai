@@ -1,4 +1,5 @@
 <head>
+    <title>Mainyk</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +8,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
         html, body {
-            background: linear-gradient(to bottom right, #EBB9C1, #D7BBA8);
+            background: linear-gradient(to bottom right, #B89685, #F8F4E3);
             color: #636b6f;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
