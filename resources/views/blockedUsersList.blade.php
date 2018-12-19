@@ -17,8 +17,8 @@ session_start();
         background: linear-gradient(to bottom right, #B89685, #F8F4E3);
         color: #636b6f;
         font-family: 'Nunito', sans-serif;
-        font-weight: 200;
-        height: 100vh;
+        font-weight: 200;height: 100%;
+        background-attachment: fixed;
         margin: 0;
         background-attachment: fixed;
     }
