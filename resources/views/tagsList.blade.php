@@ -1,3 +1,17 @@
+<?php
+session_start();
+$user=$_SESSION['id'];
+$dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+mysqli_query($dbc,"SET NAMES 'utf8'");
+if (!$dbc) {
+    die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
+}
+else {
+    $sql="SELECT * FROM zyma, rubas, spalvos, rubu_tipai, rubu_rusys WHERE fk_Rubasid_Rubas=id_Rubas and spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and fk_Naudotojas2id_Naudotojas=$user";
+    $result = mysqli_query($dbc, $sql);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +32,11 @@
         height: 100%;
         background-attachment: fixed;
         margin: 0;
+    }
+
+    img {
+        width: 150px;
+        height: 150px;
     }
 </style>
 <nav class="navbar navbar-inverse">
@@ -52,5 +71,44 @@
         </ul>
     </div>
 </nav>
+<div class="container">
+    <h2>Mano žymos</h2>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Nr.</th>
+            <th>Nuotrauka</th>
+            <th>Pavadinimas</th>
+            <th>Aprašymas</th>
+            <th>Spalva</th>
+            <th>Tipas</th>
+            <th>Rūšis</th>
+        </tr>
+        </thead>
+        <tr>
+        <tr><td>2</td>
+            <td><img src="http://tarpmergaiciu.lt/images/2/40288028673278ca01674a948c92091a.jpg" alt="ruta" border="0"></td>
+            <td>Pasakiškos medžiagos sijonas</td>
+            <td>Dydis XS. Labai gražus, mažai dėvėtas, puošnus, tinka įvairioms progoms.</td>
+            <td>Juoda</td>
+            <td>Moteriškas</td>
+            <td>Sijonas</td></tr>
+        <tr><td>8</td>
+            <td><img src="http://tarpmergaiciu.lt/images/2/4028806354ecad0d0155ff5449d6482f.jpg" alt="ruta" border="0"></td>
+            <td>Tobulos spalvos aukštakulniai</td>
+            <td>Dydis 37. Avėti tik vieną kartą, ypatingai patogūs ir gražūs.</td>
+            <td>Raudona</td>
+            <td>Moteriškas</td>
+            <td>Batai</td></tr>
+        <tr><td>10</td>
+            <td><img src="https://images.vinted.net/thumbs/f800/048a3_cWJnR5AkdCSuN8iHDJe7whBv.jpeg?1522145988$6cee0529a097fe2244aaa49c4d78b8487bccb647" alt="ruta" border="0"></td>
+            <td>Maža talpi rankinė</td>
+            <td>Oda dirbtinė. Su užtrauktuku.</td>
+            <td>Juoda</td>
+            <td>Moteriškas</td>
+            <td>Rankinė</td></tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

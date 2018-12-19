@@ -61,6 +61,11 @@
         .m-b-md {
             margin-bottom: 30px;
         }
+
+        .col-md-6
+        {
+            font-size: 33px;
+        }
     </style>
 
 </head>
@@ -95,7 +100,9 @@
         <div class="title m-b-md">
             Mainyk
         </div>
-
+        <div class="col-md-6 col-md-offset-3">
+            Sveiki atvykę! Tikimės, kad mūsų svetainėje atrasite tai, ko ieškote, ir kitiems galėsite pasiūlyti savo drabužių bei aksesuarų
+        </div>
     </div>
 </div>
 </body>
