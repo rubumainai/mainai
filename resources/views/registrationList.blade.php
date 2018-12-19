@@ -15,8 +15,9 @@
         color: #636b6f;
         font-family: 'Nunito', sans-serif;
         font-weight: 200;
-        height: 100vh;
         margin: 0;
+        height: 100%;
+        background-attachment: fixed;
     }
 </style>
 <nav class="navbar navbar-inverse">
