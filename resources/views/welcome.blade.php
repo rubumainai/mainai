@@ -1,13 +1,12 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+        <title>Mainyk</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!-- Styles -->
         <style>
@@ -18,6 +17,7 @@
                 font-weight: 200;
                 height: 100vh;
                 margin: 0;
+                background-attachment: fixed;
             }
 
             .full-height {
@@ -62,8 +62,20 @@
                 margin-bottom: 30px;
             }
         </style>
+
     </head>
     <body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Mainyk</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="{{Request::is('/login')?'active':null }}"><a href="{{url('/login')}}">Prisijungti</a></li>
+                <li class="{{Request::is('/register')?'active':null }}"><a href="{{url('/register')}}">Registruotis</a></li>
+            </ul>
+        </div>
+    </nav>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -81,17 +93,9 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Mainyk
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
             </div>
         </div>
     </body>

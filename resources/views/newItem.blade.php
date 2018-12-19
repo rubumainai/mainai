@@ -18,6 +18,24 @@
         height: 100vh;
         margin: 0;
     }
+    input[class="fields"]
+    {
+        border-radius: 18px;
+        background: #b9bbbe;
+        padding: 10px;
+        width: 200px;
+        height: 10px;
+    }
+    input[class="button"]
+    {
+        background-color: #A1B0AB;
+        color: black;
+        font-weight: bold;
+        font-size: 15px;
+        width: 80px;
+        border-radius: 12px;
+        font-family: 'Nunito', sans-serif;
+    }
 </style>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">

@@ -73,7 +73,7 @@ VALUES ('$vardas', '$pavarde', '$el_pastas', '$prisijungimo_vardas', '$slapt','$
         if(is_null($row['vardas']))
         {
             $_SESSION["error"]="klaida";
-            return redirect('/login');
+           // return redirect('/login');
         }
         else
         {

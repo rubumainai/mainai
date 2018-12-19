@@ -21,6 +21,16 @@ session_start();
         height: 100vh;
         margin: 0;
     }
+    button[class = "mygt"]
+    {
+        background-color: #A1B0AB;
+        color: black;
+        font-weight: bold;
+        font-size: 15px;
+        width: 100px;
+        border-radius: 12px;
+        font-family: 'Nunito', sans-serif;
+    }
 </style>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -29,27 +39,12 @@ session_start();
         </div>
         <ul class="nav navbar-nav">
             <li class="{{Request::is('/catalog')?'active':null }}"><a href="{{url('/catalog')}}">Katalogas</a></li>
-            <li class="{{Request::is('/newItem')?'active':null }}"><a href="{{url('/newItem')}}">Pridėti naują</a></li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Rodyti mano
-                    <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li class="{{Request::is('/myCatalog')?'active':null }}"><a href="{{url('/myCatalog')}}">Katalogas</a></li>
-                    <li class="{{Request::is('/personalHistory')?'active':null }}"><a href="{{url('/personalHistory')}}">Istorija</a></li>
-                </ul>
-            </li>
-            <form class="navbar-form navbar-left" action="/action_page.php">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Ieškoti...">
-                </div>
-                <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </form>
+            <li class="{{Request::is('/blockedUsersList')?'active':null }}"><a href="{{url('/blockedUsersList')}}">Užblokuoti naudotojai</a></li>
+            <li class="{{Request::is('/problemsList')?'active':null }}"><a href="{{url('/problemsList')}}">Nusiskundimai</a></li>
+            <li class="{{Request::is('/registrationList')?'active':null }}"><a href="{{url('/registrationList')}}">Rezervacijos</a></li>
+            <li class="{{Request::is('/registrationStatistic')?'active':null }}"><a href="{{url('/registrationStatistic')}}">Statistika</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li class="{{Request::is('/tagsList')?'active':null}}"><a href="{{url('/tagsList')}}"><span class="glyphicon glyphicon-heart"></span></a></li>
-            <li class="{{Request::is('/myProfile')?'active':null}}"><a href="{{url('/myProfile')}}"><span class="glyphicon glyphicon-user"></span></a></li>
             <li class="{{Request::is('/logout')?'active':null}}"><a href="{{url('/logout')}}"><span class="glyphicon glyphicon-log-out"></span></a></li>
         </ul>
     </div>
@@ -70,7 +65,7 @@ session_start();
             </thead>
             <tbody>
             <?php
-            $query = "SELECT * FROM naudotojas where tipas = 2";
+            $query = "SELECT * FROM naudotojas where tipas = 2 order by registracijos_data desc";
             $connect = mysqli_connect("localhost", "root", "", "mainai");
             mysqli_query($connect,"SET NAMES 'utf8'");
             $search_result = mysqli_query($connect, $query);
@@ -80,7 +75,7 @@ session_start();
                 <td><?php echo $row['pavarde'];?></td>
                 <td><?php echo $row['email'];?></td>
                 <td><?php echo $row['registracijos_data'];?></td>
-                <td><button type=submit name="button" value="{{$idd}}" onclick="return confirm('Ar tikrai norite atblokuoti naudotoją?')">Atblokuoti</button></td>
+                <td><button type=submit class="mygt" name="button" value="{{$idd}}" onclick="return confirm('Ar tikrai norite atblokuoti naudotoją?')">Atblokuoti</button></td>
             </tr>
 
             <?php endwhile;?>
