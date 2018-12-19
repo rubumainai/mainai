@@ -21,6 +21,24 @@ session_start();
         background-attachment: fixed;
         margin: 0;
     }
+    input[class="fields"]
+    {
+        border-radius: 18px;
+        background: #b9bbbe;
+        padding: 10px;
+        width: 200px;
+        height: 10px;
+    }
+    input[class="button"]
+    {
+        background-color: #A1B0AB;
+        color: black;
+        font-weight: bold;
+        font-size: 15px;
+        width: 80px;
+        border-radius: 12px;
+        font-family: 'Nunito', sans-serif;
+    }
 </style>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -72,38 +90,36 @@ session_start();
     ?>
        <h2>Asmeninių duomenų redagavimas</h2><br>
     Vardas:<br>
-    <input type="text" name="name" value="<?php echo $row['vardas']; ?>">
+    <input type="text" name="name" class="fields" value="<?php echo $row['vardas']; ?>">
     <br><br>
     Pavardė:<br>
-    <input type="text" name="surname" value="<?php echo $row['pavarde']; ?>"><br><br>
+    <input type="text" name="surname" class="fields" value="<?php echo $row['pavarde']; ?>"><br><br>
        El. pašto adresas:<br>
-       <input type="text" name="email" value="<?php echo $row['email']; ?>"><br><br>
+       <input type="text" name="email"  class="fields" value="<?php echo $row['email']; ?>"><br><br>
        Telefono numeris:<br>
-       <input type="text" name="numer" value="<?php echo $row['tel']; ?>" minlength="9" maxlength="9"><br>
+       <input type="text" name="numer" class="fields" value="<?php echo $row['tel']; ?>" minlength="9" maxlength="9"><br>
        <br>
        Miestas:<br>
-       <input type="text" name="city" value="<?php echo $row['miestas']; ?>"><br>
+       <input type="text" name="city" class="fields" value="<?php echo $row['miestas']; ?>"><br>
        <br>
     Prisijungimo vardas:<br>
-    <input type="text" name="username" value="<?php echo $row['prisijungimo_vardas']; ?>" readonly="readonly"><br>
+    <input type="text" name="username" class="fields" value="<?php echo $row['prisijungimo_vardas']; ?>" readonly="readonly"><br>
 
 
     <br>
 
 
     Naujas slaptažodis:<br>
-    <input type="password" name="password" value=""><br>
+    <input type="password" name="password" class="fields" value=""><br>
     <br>
     Pakartoti slaptažodį:<br>
-    <input type="password" name="password2" value=""><br>
+    <input type="password" name="password2" class="fields" value=""><br>
     <br>
-    <input type="submit" value="Pakeisti"><br>
+    <input type="submit" class="button" value="Pakeisti"><br><br>
 
     <?php
     if(!empty($_SESSION['error']))
     {
-
-
         if (   $_SESSION['error']=='klaida'  )
         {
             echo "<h4>Neteisingai įvestas slaptažodis</h4>";

@@ -18,23 +18,55 @@ session_start();
             height: 100vh;
             margin: 0;
         }
+        input[class="fields"]
+        {
+            border-radius: 18px;
+            background: #b9bbbe;
+            padding: 10px;
+            width: 200px;
+            height: 10px;
+        }
+        input[class="button"]
+        {
+            background-color: #A1B0AB;
+            color: black;
+            font-weight: bold;
+            font-size: 15px;
+            width: 100px;
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+        }
         </style>
 </head>
 <html>
 <body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Mainyk</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="{{Request::is('/login')?'active':null }}"><a href="{{url('/login')}}">Prisijungti</a></li>
+            <li class="{{Request::is('/register')?'active':null }}"><a href="{{url('/register')}}">Registruotis</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="{{Request::is('/')?'active':null}}"><a href="{{url('')}}">Atgal į pradžią <span class="glyphicon glyphicon-log-out"></span></a></li>
+        </ul>
+    </div>
+</nav>
 
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
-        <h2>Vartotojo prisijungimas </h2><br>
+        <h2>Naudotojo prisijungimas </h2><br>
         <form class="" action="{{URL::to('/logs')}}" method="post">
             @csrf
             <h4>Įveskite prisijungimo vardą:</h4>
-            <input type="text" placeholder="Įveskite prisijungimo vardą" name="prisijungimo_vardas" value="" required> <br>
+            <input type="text" name="prisijungimo_vardas" class="fields" required> <br>
             <br>
             <h4>Įveskite slaptažodį:</h4>
-            <input type="password" name="slaptazodis" placeholder="Įveskite slaptažodį" value="" required>
+            <input type="password" name="slaptazodis"  class="fields" value="" required>
             <br><br>
-            <button type=submit name="button">Prisijungti</button>
+            <input type=submit class="button" name="button" value="Prisijungti">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <?php
             if(!empty($_SESSION['error']))
