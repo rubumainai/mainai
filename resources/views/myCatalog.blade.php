@@ -1,3 +1,17 @@
+<?php
+session_start();
+$user=$_SESSION['id'];
+$dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+mysqli_query($dbc,"SET NAMES 'utf8'");
+if (!$dbc) {
+    die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
+}
+else {
+    $sql="SELECT * FROM rubas, spalvos, rubu_tipai, rubu_rusys WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and fk_Naudotojasid_Naudotojas=$user";
+    $result = mysqli_query($dbc, $sql);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +31,11 @@
         font-weight: 200;height: 100%;
         background-attachment: fixed;
         margin: 0;
+    }
+
+    img {
+        width: 150px;
+        height: 150px;
     }
 </style>
 <nav class="navbar navbar-inverse">
@@ -51,5 +70,37 @@
         </ul>
     </div>
 </nav>
+<div class="container">
+<h2>Mano drabužiai</h2>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Nr.</th>
+            <th>Nuotrauka</th>
+            <th>Pavadinimas</th>
+            <th>Aprašymas</th>
+            <th>Spalva</th>
+            <th>Tipas</th>
+            <th>Rūšis</th>
+        </tr>
+        </thead>
+        <tr>
+        <tr><td>5</td>
+            <td><img src="http://www.minimi.lt/1882/minimi-juoda-palaidine-cool-dog.jpg" alt="ruta" border="0"></td>
+            <td>Šilta palaidinė su nuotaikinga aplikacija</td>
+            <td>Dydis S. Nė karto nedėvėtas, su etikete, nesipūkuoja.</td>
+            <td>Juoda</td>
+            <td>Moteriškas</td>
+            <td>Palaidinė</td></tr>
+        <tr><td>7</td>
+            <td><img src="http://drabuzeliaivaikams.lt/image/cache/data/drabuziai-vaikams-palaidine-mergaitei-grazi-kaina-351x351.jpg" alt="ruta" border="0"></td>
+            <td>Gražus mergaitiškas megztinukas</td>
+            <td>Dydis S. Patiks kiekvienai mergaitei, su aplikacija.</td>
+            <td>Balta</td>
+            <td>Vaikiškas</td>
+            <td>Palaidinė</td></tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
