@@ -56,7 +56,6 @@ Route::get('/catalog', function () {
 Route::get('/blockedUsersList', function () {
     return view('blockedUsersList');
 });
-
 Route::post('/logs', 'UserController@logs');
 
 Route::post('/store', 'UserController@store');

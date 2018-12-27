@@ -18,6 +18,29 @@
         background-attachment: fixed;
         margin: 0;
     }
+
+    .a{
+        size: 20px;
+    }
+
+    input[class="fields"]
+    {
+        border-radius: 18px;
+        background: #b9bbbe;
+        padding: 10px;
+        width: 200px;
+        height: 10px;
+    }
+    input[class="button"]
+    {
+        background-color: #A1B0AB;
+        color: black;
+        font-weight: bold;
+        font-size: 15px;
+        width: 80px;
+        border-radius: 12px;
+        font-family: 'Nunito', sans-serif;
+    }
 </style>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -51,5 +74,22 @@
         </ul>
     </div>
 </nav>
+<div class="container">
+<h2>Naudotojo informacija</h2><br>
+        <h4>Vardas: Skaistė</h4><br>
+        <h4>Pavardė: Ramanauskaitė</h4><br>
+        <h4>El. pašto adresas: ramanauskaiteskaiste@gmail.com</h4><br>
+        <h4>Telefono numeris: 862703972</h4><br>
+        <h4>Miestas: Kaunas</h4><br>
+    <h4>Galite įvertinti</h4>
+    <a><span class="glyphicon glyphicon-star"></span></a><a><span class="glyphicon glyphicon-star"></span></a><a><span class="glyphicon glyphicon-star"></span></a><a><span class="glyphicon glyphicon-star"></span></a><a><span class="glyphicon glyphicon-star"></span></a>
+
+    <br>
+    <h4>Aprašymas:</h4>
+    <input type="text" name="prisijungimo_vardas" class="fields" value="" required><br><br>
+    <input type="submit" class="button" value="Vertinti"><br><br>
+    <br>
+
+</div>
 </body>
 </html>
