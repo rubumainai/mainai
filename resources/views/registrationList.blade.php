@@ -13,12 +13,51 @@
     html, body {
         background: linear-gradient(to bottom right, #B89685, #F8F4E3);
         color: #636b6f;
+        font-size: 20px;
         font-family: 'Nunito', sans-serif;
         font-weight: 200;
         margin: 0;
         height: 100%;
         background-attachment: fixed;
     }
+    select[name="tipas"]
+    {
+        background-color: #A1B0AB;
+        color: black;
+        font-weight: bold;
+        font-size: 15px;
+        width: 300px;
+        border-radius: 12px;
+        height: 25px;
+        font-family: 'Nunito', sans-serif;
+    }
+
+    input[value="Rodyti"]
+    {
+        background-color: #A1B0AB;
+        color: black;
+        font-weight: bold;
+        font-size: 15px;
+        width: 100px;
+        border-radius: 12px;
+        font-family: 'Nunito', sans-serif;
+    }
+    input:hover {
+        background-color: #907D8D;
+        color: black;
+        font-family: 'Nunito', sans-serif;
+    }
+    input[type="date"]
+    {
+        background-color: #A1B0AB;
+        color: black;
+        font-weight: bold;
+        font-size: 15px;
+        width: 180px;
+        border-radius: 12px;
+        font-family: 'Nunito', sans-serif;
+    }
+
 </style>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -37,5 +76,86 @@
         </ul>
     </div>
 </nav>
+<div class="container">
+    <h2>Statistika</h2>
+    <form method = "get">
+        <div class="dropdown2">Pasirinkite ataskaitos tipą
+            <br>
+            <br>
+            <select name="tipas">
+                <option value="1">Įvykdytos rezervacijos</option>
+                <option value="2">Arenų populiarumas</option>
+            </select>
+            <input type="date" name="from"/><input type="date" name="to"/><input name = "submit" type="submit" value="Rodyti"><br>
+            <br>
+        </div>
+    </form>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['line']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'Diena');
+            data.addColumn('number', 'Rezervacijos');
+
+            data.addRows([
+                [1,  20],
+                [2,  15],
+                [3,  2],
+                [4,  11],
+                [5,  11],
+                [6,   8],
+                [7,   7],
+                [8,  6],
+                [9,  5],
+                [10, 6],
+                [11,  7],
+                [12,  6],
+                [13,  9],
+                [14,  11],
+                [15,  11],
+                [16, 12],
+                [17,  13],
+                [18,  10],
+                [19,  11],
+                [20,  11],
+                [21, 12],
+                [22,  15],
+                [23,  16],
+                [24,  20],
+                [25,  15],
+                [26,  14],
+                [27,  13],
+                [28,  12],
+                [29,  14],
+                [30,  23],
+                [31,  25],
+            ]);
+
+            var options = {
+                width: 900,
+                height: 500,
+                axes: {
+                    x: {
+                        0: {side: 'top'}
+                    }
+                },
+                backgroundColor: 'transparent'
+            };
+
+            var chart = new google.charts.Line(document.getElementById('line_top_x'));
+
+            chart.draw(data, google.charts.Line.convertOptions(options));
+        }
+    </script>
+    </head>
+    <body>
+    <div id="line_top_x"></div>
+    </body>
+</div>
+</div>
 </body>
 </html>
