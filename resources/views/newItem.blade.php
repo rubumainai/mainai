@@ -26,16 +26,61 @@
         width: 200px;
         height: 10px;
     }
-    input[class="button"]
+
+    input[type="submit"]
+    {
+        border-radius: 18px;
+        background: #b9bbbe;
+        font-size: 18px;
+    }
+
+    input[type="file"]
+    {
+        background: transparent;
+    }
+
+    button[class="btn btn-success"]
     {
         background-color: #A1B0AB;
         color: black;
         font-weight: bold;
         font-size: 15px;
-        width: 80px;
+        width: 90px;
         border-radius: 12px;
         font-family: 'Nunito', sans-serif;
     }
+    button[class="btn btn-primary"]
+    {
+        background-color: #A1B0AB;
+        color: black;
+        font-weight: bold;
+        font-size: 15px;
+        width: 90px;
+        border-radius: 12px;
+        font-family: 'Nunito', sans-serif;
+    }
+
+    select
+    {
+        border-radius: 18px;
+        background: #b9bbbe;
+        width: 200px;
+        height: 25px;
+    }
+
+    .dropdown
+    {
+        font-size: 18px;
+    }
+
+    .cont{
+        font-size: 15px;
+    }
+
+    a{
+        font-size: 15px;
+    }
+
 </style>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -69,7 +114,63 @@
         </ul>
     </div>
 </nav>
-
+<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+        <h2>Naujas įkėlimas</h2>
+        <form method="post" id="formImgInp" action="{{route('image.add')}}" enctype="multipart/form-data">
+            <!-- DROP DOWN-->
+            <h4>Įveskite pavadinimą:</h4>
+            <input type="text" name="pavadinimas" class="fields" value="" required><br>
+            <br>
+            <h4>Įveskite aprašymą:</h4>
+            <input type="text" name="aprasymas" class="fields" value="" required><br>
+            <br>
+            <div class="dropdown" required>Pasirinkite spalvą
+                <br>
+                <select name = "spalva">
+                    <option value="1">Raudona</option>
+                    <option value="2">Geltona</option>
+                    <option value="3">Mėlyna</option>
+                    <option value="4">Žalia</option>
+                    <option value="5">Violetinė</option>
+                    <option value="6">Oranžinė</option>
+                    <option value="7">Juoda</option>
+                    <option value="8">Balta</option>
+                </select>
+            </div>
+            <br>
+            <div class="dropdown" required>Pasirinkite tipą
+                <br>
+                <select name = "tipas">
+                    <option value="1">Aksesuaras</option>
+                    <option value="2">Batai</option>
+                    <option value="3">Rankinė</option>
+                    <option value="4">Suknelė</option>
+                    <option value="5">Sijonas</option>
+                    <option value="6">Kelnės</option>
+                    <option value="7">Švarkas</option>
+                    <option value="8">Palaidinė</option>
+                </select>
+            </div>
+            <br>
+            <div class="dropdown" required>Pasirinkite rūšį
+                <br>
+            <select name = "rusis">
+                <option value="1">Vaikiškas</option>
+                <option value="2">Vyriškas</option>
+                <option value="3">Moteriškas</option>
+            </select>
+            </div>
+            <br>
+            <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+            <input type="file" name="image" id="image" required/><br>
+            <input type="file" name="image2" id="image2" required/><br>
+            <input type="file" name="image3" id="image3" required/><br>
+            <input type="file" name="image4" id="image4" required/><br>
+            <input type="submit"/>
+        </form>
+</div>
+</div>
 
 </body>
 </html>
