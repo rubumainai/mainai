@@ -67,3 +67,8 @@ Route::post('/editClient', 'UserController@editClient');
 Route::post('/unblock', 'AdminController@unblock');
 
 Route::post('/block', 'AdminController@block');
+
+Route::post('/addNew', [
+    'as'=>'image.add',
+    'uses'=>'ImageController@addNew'
+]);
