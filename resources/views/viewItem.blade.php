@@ -1,3 +1,14 @@
+<?php
+session_start();
+$id = $_GET['itemid'];
+$dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+if (!$dbc) {
+    die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
+}
+    $sql="SELECT * FROM rubas, spalvos, rubu_tipai, rubu_rusys WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and id_Rubas=$id";
+    $result = mysqli_query($dbc, $sql);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +29,22 @@
         height: 100%;
         background-attachment: fixed;
         margin: 0;
+    }
+
+    img{
+        height: 300px;
+        width: 300px;
+    }
+
+    button
+    {
+        background-color: #A1B0AB;
+        color: black;
+        font-weight: bold;
+        font-size: 15px;
+        width: 100px;
+        border-radius: 12px;
+        font-family: 'Nunito', sans-serif;
     }
 </style>
 <nav class="navbar navbar-inverse">
@@ -52,6 +79,26 @@
         </ul>
     </div>
 </nav>
+<div class="container">
+    <?php
+    $row = mysqli_fetch_array($result); ?>
+    <h3><?php echo $row['pavadinimas']; ?></h3><br>
+    <h4><img src="../public/images/<?php echo $row['foto1']?>"></h4>
 
+    <h4><?php echo $row['aprasymas']; ?></h4><br>
+    <h4>Spalva <?php echo $row['name']; ?></h4><br>
+    <h4>Rūšis <?php echo $row['rname']; ?></h4><br>
+    <h4>Tipas <?php echo $row['tname']; ?></h4><br>
+        <form class="" action="{{URL::to('/addToBasket')}}" method="post">
+            @csrf
+            <input type="hidden" name="fk" value="{{$id}}">
+            <button type=submit name="button" <?php if ($row['busena'] != '1'){ ?> disabled <?php   } ?>>Rezervuoti</button> 
+        </form>
+        <form class="" action="{{URL::to('/addTag')}}" method="post">
+            @csrf
+            <input type="hidden" name="fk" value="{{$id}}">
+            <button type=submit name="button">Pažymėti</button>
+        </form>
+</div>
 </body>
 </html>

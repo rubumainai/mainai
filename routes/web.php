@@ -72,3 +72,7 @@ Route::post('/addNew', [
     'as'=>'image.add',
     'uses'=>'ImageController@addNew'
 ]);
+
+Route::post('/addTag', 'ItemController@addTag');
+
+Route::post('/addToBasket', 'ItemController@addToBasket');

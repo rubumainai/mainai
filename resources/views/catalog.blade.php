@@ -37,6 +37,11 @@ else {
         width: 150px;
         height: 150px;
     }
+
+    input{
+        background: transparent;
+        border-radius: 12px;
+    }
 </style>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -85,35 +90,20 @@ else {
                 <th>Rūšis</th>
             </tr>
             </thead>
-            <tr>
-            <td>1</td>
-            <td><img src="https://tiuliofeja.lt/792-home_default_crop/suknele-61.jpg" alt="ruta" border="0"></td>
-            <td>Nuostabios kokybės proginė suknelė</td>
-            <td>Dydis s. Tik vieną kartą dėvėta, kokybė gera.</td>
-            <td>Balta</td>
-            <td>Moteriškas</td>
-            <td>Suknelė</td></tr>
-            <tr><td>2</td>
-            <td><img src="http://tarpmergaiciu.lt/images/2/40288028673278ca01674a948c92091a.jpg" alt="ruta" border="0"></td>
-            <td>Pasakiškos medžiagos sijonas</td>
-            <td>Dydis XS. Labai gražus, mažai dėvėtas, puošnus, tinka įvairioms progoms.</td>
-            <td>Juoda</td>
-            <td>Moteriškas</td>
-            <td>Sijonas</td></tr>
-            <tr><td>3</td>
-                <td><img src="https://images.vinted.net/thumbs/f800/0067a_faQdKxMKVYcu4Hoi7J3LZKhV.jpeg?1502361796$fbdc386bdf8dcc54df6e96f31602ab936bb4b7b2" alt="ruta" border="0"></td>
-                <td>Klasikinės puikiai tinkančios kasdieniniam nešiojimui.</td>
-                <td>Dydis M. Puikiai tinka tiek oficialiam darbui, tiek vakarėliui.</td>
-                <td>Juoda</td>
-                <td>Moteriškas</td>
-                <td>Kelnės</td></tr>
-            <tr><td>4</td>
-                <td><img src="http://bluecat.lt/image/cache/catalog/SID.%20PAKABUKAS/RINK-0007-3-500x500.jpg" alt="ruta" border="0"></td>
-                <td>Labai puošnus ir tinkantis bet kokiai progai.</td>
-                <td>Dėvėtas tik kartą, kokybė gera, užsegimas nugaroje.</td>
-                <td>Juoda</td>
-                <td>Moteriškas</td>
-                <td>Aksesuaras</td></tr>
+            <tbody>
+            <?php
+            while($row = mysqli_fetch_array($result)) :?>
+            <?php $array =array() ?>
+            <td><?php echo $row['id_Rubas'];$idd =$row['id_Rubas'];?></td>
+            <td><img src="../public/images/<?php echo $row['foto1']?>"></td>
+            <td><?php echo $row['pavadinimas'];?></td>
+            <td><?php echo $row['aprasymas'];?></td>
+            <td><?php echo $row['name'];?></td>
+            <td><?php echo $row['tname'];?></td>
+            <td><?php echo $row['rname'];?></td>
+            <td><?php echo" <a href=../public/viewItem?itemid=",urlencode($idd),"><input type=button id='$idd' value='Peržiūrėti' ></a> "?></td>
+            </tr>
+            <?php endwhile;?>
             </tbody>
         </table>
 </div>
