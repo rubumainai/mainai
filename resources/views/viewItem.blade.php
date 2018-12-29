@@ -84,7 +84,6 @@ if (!$dbc) {
     $row = mysqli_fetch_array($result); ?>
     <h3><?php echo $row['pavadinimas']; ?></h3><br>
     <h4><img src="../public/images/<?php echo $row['foto1']?>"></h4>
-
     <h4><?php echo $row['aprasymas']; ?></h4><br>
     <h4>Spalva <?php echo $row['name']; ?></h4><br>
     <h4>Rūšis <?php echo $row['rname']; ?></h4><br>

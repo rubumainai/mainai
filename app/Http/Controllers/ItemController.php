@@ -30,6 +30,48 @@ VALUES (CURRENT_DATE , DEFAULT , '$itemID','$user')";
         }
     }
 
+    public function removeTag(request $request){
+
+        $itemID=($request->input('fk'));
+        $user=$_SESSION["id"];
+        $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+        mysqli_query($dbc, "SET NAMES 'utf8'");
+        if (!$dbc) {
+            die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
+        }
+        else {
+            $sql3 = "DELETE FROM zyma WHERE fk_Rubasid_Rubas='$itemID'";
+
+            if (mysqli_query($dbc, $sql3))
+            {echo "Ištrinta";
+                return redirect('/tagsList');
+                exit;}
+            else die ("Klaida trinant:" .mysqli_error($dbc));
+
+        }
+    }
+
+    public function removeItem(request $request){
+
+        $itemID=($request->input('fk'));
+        $user=$_SESSION["id"];
+        $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+        mysqli_query($dbc, "SET NAMES 'utf8'");
+        if (!$dbc) {
+            die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
+        }
+        else {
+            $sql3 = "DELETE FROM rubas WHERE id_Rubas='$itemID'";
+
+            if (mysqli_query($dbc, $sql3))
+            {echo "Ištrinta";
+                return redirect('/myCatalog');
+                exit;}
+            else die ("Klaida trinant:" .mysqli_error($dbc));
+
+        }
+    }
+
     public function addToBasket(request $request){
 
         $itemID=($request->input('fk'));

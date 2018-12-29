@@ -7,10 +7,9 @@ if (!$dbc) {
     die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
 }
 else {
-    $sql="SELECT * FROM zyma, rubas, spalvos, rubu_tipai, rubu_rusys WHERE fk_Rubasid_Rubas=id_Rubas and spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and fk_Naudotojas2id_Naudotojas=$user";
+    $sql="SELECT * FROM zyma, rubas, spalvos, rubu_tipai, rubu_rusys WHERE fk_Rubasid_Rubas=id_Rubas and spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and zyma.fk_Naudotojasid_Naudotojas='$user'";
     $result = mysqli_query($dbc, $sql);
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +36,20 @@ else {
     img {
         width: 150px;
         height: 150px;
+    }
+
+    input{
+        background: transparent;
+        border-radius: 12px;
+        width: 100px;
+        color: #636b6f;
+    }
+
+    button{
+        background: transparent;
+        border-radius: 12px;
+        width: 100px;
+        color: #636b6f;
     }
 </style>
 <nav class="navbar navbar-inverse">
@@ -85,28 +98,26 @@ else {
             <th>Rūšis</th>
         </tr>
         </thead>
-        <tr>
-        <tr><td>2</td>
-            <td><img src="http://tarpmergaiciu.lt/images/2/40288028673278ca01674a948c92091a.jpg" alt="ruta" border="0"></td>
-            <td>Pasakiškos medžiagos sijonas</td>
-            <td>Dydis XS. Labai gražus, mažai dėvėtas, puošnus, tinka įvairioms progoms.</td>
-            <td>Juoda</td>
-            <td>Moteriškas</td>
-            <td>Sijonas</td></tr>
-        <tr><td>8</td>
-            <td><img src="http://tarpmergaiciu.lt/images/2/4028806354ecad0d0155ff5449d6482f.jpg" alt="ruta" border="0"></td>
-            <td>Tobulos spalvos aukštakulniai</td>
-            <td>Dydis 37. Avėti tik vieną kartą, ypatingai patogūs ir gražūs.</td>
-            <td>Raudona</td>
-            <td>Moteriškas</td>
-            <td>Batai</td></tr>
-        <tr><td>10</td>
-            <td><img src="https://images.vinted.net/thumbs/f800/048a3_cWJnR5AkdCSuN8iHDJe7whBv.jpeg?1522145988$6cee0529a097fe2244aaa49c4d78b8487bccb647" alt="ruta" border="0"></td>
-            <td>Maža talpi rankinė</td>
-            <td>Oda dirbtinė. Su užtrauktuku.</td>
-            <td>Juoda</td>
-            <td>Moteriškas</td>
-            <td>Rankinė</td></tr>
+        <tbody>
+        <?php
+        while($row = mysqli_fetch_array($result)) :?>
+        <?php $array =array() ?>
+        <td><?php echo $row['id_Rubas'];$idd =$row['id_Rubas'];?></td>
+        <td><img src="../public/images/<?php echo $row['foto1']?>"></td>
+        <td><?php echo $row['pavadinimas'];?></td>
+        <td><?php echo $row['aprasymas'];?></td>
+        <td><?php echo $row['name'];?></td>
+        <td><?php echo $row['tname'];?></td>
+        <td><?php echo $row['rname'];?></td>
+        <td><?php echo" <a href=../public/viewItem?itemid=",urlencode($idd),"><input type=button id='$idd' value='Peržiūrėti' ></a> "?></td>
+        <td>
+            <form class="" action="{{URL::to('/removeTag')}}" method="post">
+                @csrf
+                <input type="hidden" name="fk" value="{{$idd}}">
+                <button type=submit name="button"><span class="glyphicon glyphicon-trash"></span> Šalinti</button>
+            </form></td>
+        </tr>
+        <?php endwhile;?>
         </tbody>
     </table>
 </div>
