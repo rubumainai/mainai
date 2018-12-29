@@ -37,6 +37,20 @@ else {
         width: 150px;
         height: 150px;
     }
+
+    input{
+        background: transparent;
+        border-radius: 12px;
+        width: 100px;
+        color: #636b6f;
+    }
+
+    button{
+        background: transparent;
+        border-radius: 12px;
+        width: 100px;
+        color: #636b6f;
+    }
 </style>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -84,21 +98,26 @@ else {
             <th>Rūšis</th>
         </tr>
         </thead>
-        <tr>
-        <tr><td>5</td>
-            <td><img src="http://www.minimi.lt/1882/minimi-juoda-palaidine-cool-dog.jpg" alt="ruta" border="0"></td>
-            <td>Šilta palaidinė su nuotaikinga aplikacija</td>
-            <td>Dydis S. Nė karto nedėvėtas, su etikete, nesipūkuoja.</td>
-            <td>Juoda</td>
-            <td>Moteriškas</td>
-            <td>Palaidinė</td></tr>
-        <tr><td>7</td>
-            <td><img src="http://drabuzeliaivaikams.lt/image/cache/data/drabuziai-vaikams-palaidine-mergaitei-grazi-kaina-351x351.jpg" alt="ruta" border="0"></td>
-            <td>Gražus mergaitiškas megztinukas</td>
-            <td>Dydis S. Patiks kiekvienai mergaitei, su aplikacija.</td>
-            <td>Balta</td>
-            <td>Vaikiškas</td>
-            <td>Palaidinė</td></tr>
+        <tbody>
+        <?php
+        while($row = mysqli_fetch_array($result)) :?>
+        <?php $array =array() ?>
+        <td><?php echo $row['id_Rubas'];$idd =$row['id_Rubas'];?></td>
+        <td><img src="../public/images/<?php echo $row['foto1']?>"></td>
+        <td><?php echo $row['pavadinimas'];?></td>
+        <td><?php echo $row['aprasymas'];?></td>
+        <td><?php echo $row['name'];?></td>
+        <td><?php echo $row['tname'];?></td>
+        <td><?php echo $row['rname'];?></td>
+        <td><?php echo" <a href=../public/viewItem?itemid=",urlencode($idd),"><input type=button id='$idd' value='Peržiūrėti' ></a> "?></td>
+        <td>
+            <form class="" action="{{URL::to('/removeItem')}}" method="post">
+                @csrf
+                <input type="hidden" name="fk" value="{{$idd}}">
+                <button type=submit name="button"<?php if ($row['busena'] != '1'){ ?> disabled <?php   } ?>><span class="glyphicon glyphicon-trash"></span> Šalinti</button>
+            </form></td>
+        </tr>
+        <?php endwhile;?>
         </tbody>
     </table>
 </div>

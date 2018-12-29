@@ -73,6 +73,10 @@ Route::post('/addNew', [
     'uses'=>'ImageController@addNew'
 ]);
 
+Route::post('/removeItem', 'ItemController@removeItem');
+
 Route::post('/addTag', 'ItemController@addTag');
+
+Route::post('/removeTag', 'ItemController@removeTag');
 
 Route::post('/addToBasket', 'ItemController@addToBasket');

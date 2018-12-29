@@ -41,6 +41,7 @@ else {
     input{
         background: transparent;
         border-radius: 12px;
+        color: #636b6f;
     }
 </style>
 <nav class="navbar navbar-inverse">
