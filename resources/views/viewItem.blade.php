@@ -44,6 +44,17 @@ if (!$dbc) {
         font-size: 15px;
         width: 100px;
         border-radius: 12px;
+        height: 25px;
+        font-family: 'Nunito', sans-serif;
+    }
+
+    input[type="button"]{
+        background-color: #A1B0AB;
+        color: black;
+        font-weight: bold;
+        font-size: 15px;
+        border-radius: 12px;
+        height: 25px;
         font-family: 'Nunito', sans-serif;
     }
 </style>
@@ -82,22 +93,24 @@ if (!$dbc) {
 <div class="container">
     <?php
     $row = mysqli_fetch_array($result); ?>
-    <h3><?php echo $row['pavadinimas']; ?></h3><br>
+    <h3><?php echo $row['pavadinimas'];$idd=$row['fk_Naudotojasid_Naudotojas']; ?></h3><br>
     <h4><img src="../public/images/<?php echo $row['foto1']?>"></h4>
     <h4><?php echo $row['aprasymas']; ?></h4><br>
     <h4>Spalva <?php echo $row['name']; ?></h4><br>
     <h4>Rūšis <?php echo $row['rname']; ?></h4><br>
     <h4>Tipas <?php echo $row['tname']; ?></h4><br>
+        <h4><?php echo" <a href=../public/otherProfile?userid=",urlencode($idd),"><input type=button id='$idd' value='Savininko profilis' ></a> "?></h4>
         <form class="" action="{{URL::to('/addToBasket')}}" method="post">
             @csrf
             <input type="hidden" name="fk" value="{{$id}}">
             <button type=submit name="button" <?php if ($row['busena'] != '1'){ ?> disabled <?php   } ?>>Rezervuoti</button> 
-        </form>
+        </form><br>
         <form class="" action="{{URL::to('/addTag')}}" method="post">
             @csrf
             <input type="hidden" name="fk" value="{{$id}}">
             <button type=submit name="button">Pažymėti</button>
         </form>
+
 </div>
 </body>
 </html>
