@@ -39,7 +39,7 @@ class UserController extends Controller
             $sql="select * from naudotojas where prisijungimo_vardas='$prisijungimo_vardas' or email = '$el_pastas'";
             $data = mysqli_query($dbc, $sql);
             $row = mysqli_fetch_assoc($data);
-            if ( is_null($row['Vardas'])) {
+            if ( is_null($row['vardas'])) {
 
                 $sql3 = "INSERT INTO naudotojas (vardas,pavarde, email, prisijungimo_vardas, slaptazodis,gimimo_data, miestas, tel, registracijos_data, tipas, id_Naudotojas)
 VALUES ('$vardas', '$pavarde', '$el_pastas', '$prisijungimo_vardas', '$slapt','$gimimo_data','$miestas','$tel',CURRENT_DATE , 1, DEFAULT )";
@@ -136,5 +136,16 @@ VALUES ('$vardas', '$pavarde', '$el_pastas', '$prisijungimo_vardas', '$slapt','$
             location.href=("/mainai/public/catalog");  
         }
          </script>';
+    }
+
+    public function addRecomendation(request $request)
+    {
+        if (isset($_POST['vert'])) {
+            return redirect('/catalog');
+        }
+        else{
+            echo "Nepasirinktas";
+        }
+
     }
 }

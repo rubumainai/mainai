@@ -80,3 +80,5 @@ Route::post('/addTag', 'ItemController@addTag');
 Route::post('/removeTag', 'ItemController@removeTag');
 
 Route::post('/addToBasket', 'ItemController@addToBasket');
+
+Route::post('/addRecomendation', 'UserController@addRecomendation');

@@ -1,3 +1,13 @@
+<?php
+session_start();
+$id = $_GET['userid'];
+$dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+if (!$dbc) {
+    die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
+}
+$sql="SELECT * FROM naudotojas WHERE id_Naudotojas=$id";
+$result = mysqli_query($dbc, $sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,6 +51,15 @@
         border-radius: 12px;
         font-family: 'Nunito', sans-serif;
     }
+
+    button[type="button"]{
+        background: transparent;
+        background-color: transparent;
+    }
+
+    button[type="button"]:active {
+        background-color: yellow;
+    }
 </style>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -76,20 +95,36 @@
 </nav>
 <div class="container">
 <h2>Naudotojo informacija</h2><br>
-        <h4>Vardas: Skaistė</h4><br>
-        <h4>Pavardė: Ramanauskaitė</h4><br>
-        <h4>El. pašto adresas: ramanauskaiteskaiste@gmail.com</h4><br>
-        <h4>Telefono numeris: 862703972</h4><br>
-        <h4>Miestas: Kaunas</h4><br>
-    <h4>Galite įvertinti</h4>
-    <a><span class="glyphicon glyphicon-star"></span></a><a><span class="glyphicon glyphicon-star"></span></a><a><span class="glyphicon glyphicon-star"></span></a><a><span class="glyphicon glyphicon-star"></span></a><a><span class="glyphicon glyphicon-star"></span></a>
+    <?php
+    $row = mysqli_fetch_array($result); ?>
+    <h4>Vardas: <?php echo $row['vardas']; ?></h4><br>
+    <h4>Pavardė: <?php echo $row['pavarde']; ?></h4><br>
+    <h4>El. pašto adresas: <?php echo $row['email']; ?></h4><br>
+    <h4>Telefono numeris: <?php echo $row['tel']; ?></h4><br>
+    <h4>Miestas: <?php echo $row['miestas']; ?></h4><br>
 
-    <br>
+    <h4>Galite įvertinti</h4>
+    <form class="" action="{{URL::to('/addRecomendation')}}" method="post">
+    <button type="button" class="btn btn-default btn-sm" data-toggle="button" aria-pressed="false" value="1" name="pirmas">
+        <span class="glyphicon glyphicon-star"></span>
+    </button>
+    <button type="button" class="btn btn-default btn-sm" data-toggle="button" aria-pressed="false" value="2">
+        <span class="glyphicon glyphicon-star"></span>
+    </button>
+    <button type="button" class="btn btn-default btn-sm" data-toggle="button" aria-pressed="false" value="3">
+        <span class="glyphicon glyphicon-star"></span>
+    </button>
+    <button type="button" class="btn btn-default btn-sm" data-toggle="button" aria-pressed="false" value="4">
+        <span class="glyphicon glyphicon-star"></span>
+    </button>
+    <button type="button" class="btn btn-default btn-sm" data-toggle="button" aria-pressed="false" value="5">
+        <span class="glyphicon glyphicon-star"></span>
+    </button>
     <h4>Aprašymas:</h4>
     <input type="text" name="prisijungimo_vardas" class="fields" value="" required><br><br>
-    <input type="submit" class="button" value="Vertinti"><br><br>
+    <input type="submit" class="button" name="vert" value="Vertinti"><br><br>
     <br>
-
+    </form>
 </div>
 </body>
 </html>
