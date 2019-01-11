@@ -35,7 +35,17 @@ session_start();
         color: black;
         font-weight: bold;
         font-size: 15px;
-        width: 80px;
+        width: 120px;
+        border-radius: 12px;
+        font-family: 'Nunito', sans-serif;
+    }
+    button[class="button"]
+    {
+        background-color: #A1B0AB;
+        color: black;
+        font-weight: bold;
+        font-size: 15px;
+        width: 130px;
         border-radius: 12px;
         font-family: 'Nunito', sans-serif;
     }
@@ -90,44 +100,42 @@ session_start();
     ?>
        <h2>Asmeninių duomenų redagavimas</h2><br>
     Vardas:<br>
-    <input type="text" name="name" class="fields" value="<?php echo $row['vardas']; ?>">
+    <input type="text" name="vardas" class="fields" value="<?php echo $row['vardas']; ?>" required>
     <br><br>
     Pavardė:<br>
-    <input type="text" name="surname" class="fields" value="<?php echo $row['pavarde']; ?>"><br><br>
-       El. pašto adresas:<br>
-       <input type="text" name="email"  class="fields" value="<?php echo $row['email']; ?>"><br><br>
+    <input type="text" name="pavarde" class="fields" value="<?php echo $row['pavarde']; ?>" required><br><br>
        Telefono numeris:<br>
-       <input type="text" name="numer" class="fields" value="<?php echo $row['tel']; ?>" minlength="9" maxlength="9"><br>
+       <input type="text" name="mob_numeris" class="fields" value="<?php echo $row['tel']; ?>" minlength="9" maxlength="9" required><br>
        <br>
        Miestas:<br>
-       <input type="text" name="city" class="fields" value="<?php echo $row['miestas']; ?>"><br>
+       <input type="text" name="miestas" class="fields" value="<?php echo $row['miestas']; ?>" required><br>
        <br>
-    Prisijungimo vardas:<br>
-    <input type="text" name="username" class="fields" value="<?php echo $row['prisijungimo_vardas']; ?>" readonly="readonly"><br>
-
-
-    <br>
-
-
     Naujas slaptažodis:<br>
-    <input type="password" name="password" class="fields" value=""><br>
+    <input type="password" name="slaptazodis" class="fields" value=""><br>
     <br>
     Pakartoti slaptažodį:<br>
-    <input type="password" name="password2" class="fields" value=""><br>
+    <input type="password" name="slaptazodis2" class="fields" value=""><br>
     <br>
-    <input type="submit" class="button" value="Pakeisti"><br><br>
+    <button type=submit class="button" name="button" value="{{$_SESSION['id']}}">Pakeisti</button>
+    <br><br>
 
     <?php
     if(!empty($_SESSION['error']))
     {
         if (   $_SESSION['error']=='klaida'  )
         {
-            echo "<h4>Neteisingai įvestas slaptažodis</h4>";
+            echo "<h4 style='color: red'>Neteisingai pakartotas slaptažodis</h4>";
             $_SESSION['error'] = "";
         }}
     ?>
 
 </form>
+        <form class="" action="{{URL::to('/deleteUser')}}" method="post">
+            @csrf
+
+            <button type=submit class="button" name="button" value="{{$_SESSION['id']}}" onclick="return confirm('Ar tikrai norite pašalinti paskyrą?')">Ištrinti paskyrą</button>
+            <br><br>
+        </form>
     </div>
 </div>
 </body>
