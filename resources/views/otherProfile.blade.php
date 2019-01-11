@@ -7,6 +7,13 @@ if (!$dbc) {
 }
 $sql="SELECT * FROM naudotojas WHERE id_Naudotojas=$id";
 $result = mysqli_query($dbc, $sql);
+
+$sql2="SELECT * FROM rekomendacija WHERE fk_Naudotojasid_Naudotojas=$id";
+$result2 = mysqli_query($dbc, $sql2);
+
+$result3= mysqli_query($dbc,"SELECT AVG(vertinimas) AS vert FROM rekomendacija");
+$row3 = mysqli_fetch_assoc($result3);
+$average = $row3['vert'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,6 +34,19 @@ $result = mysqli_query($dbc, $sql);
         font-weight: 200;height: 100%;
         background-attachment: fixed;
         margin: 0;
+    }
+
+    .dropdown{
+        font-family: 'Nunito', sans-serif;
+        font-size: 19px;
+    }
+
+    select
+    {
+        border-radius: 18px;
+        background: #b9bbbe;
+        width: 50px;
+        height: 25px;
     }
 
     .a{
@@ -59,6 +79,10 @@ $result = mysqli_query($dbc, $sql);
 
     button[type="button"]:active {
         background-color: yellow;
+    }
+
+    .table{
+        font-size: 19px;
     }
 </style>
 <nav class="navbar navbar-inverse">
@@ -94,6 +118,7 @@ $result = mysqli_query($dbc, $sql);
     </div>
 </nav>
 <div class="container">
+    <div class="col-md-8">
 <h2>Naudotojo informacija</h2><br>
     <?php
     $row = mysqli_fetch_array($result); ?>
@@ -103,28 +128,51 @@ $result = mysqli_query($dbc, $sql);
     <h4>Telefono numeris: <?php echo $row['tel']; ?></h4><br>
     <h4>Miestas: <?php echo $row['miestas']; ?></h4><br>
 
-    <h4>Galite įvertinti</h4>
     <form class="" action="{{URL::to('/addRecomendation')}}" method="post">
-    <button type="button" class="btn btn-default btn-sm" data-toggle="button" aria-pressed="false" value="1" name="pirmas">
-        <span class="glyphicon glyphicon-star"></span>
-    </button>
-    <button type="button" class="btn btn-default btn-sm" data-toggle="button" aria-pressed="false" value="2">
-        <span class="glyphicon glyphicon-star"></span>
-    </button>
-    <button type="button" class="btn btn-default btn-sm" data-toggle="button" aria-pressed="false" value="3">
-        <span class="glyphicon glyphicon-star"></span>
-    </button>
-    <button type="button" class="btn btn-default btn-sm" data-toggle="button" aria-pressed="false" value="4">
-        <span class="glyphicon glyphicon-star"></span>
-    </button>
-    <button type="button" class="btn btn-default btn-sm" data-toggle="button" aria-pressed="false" value="5">
-        <span class="glyphicon glyphicon-star"></span>
-    </button>
+        <div class="dropdown" required>Pasirinkite balą
+            <br>
+            <select name = "balas">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
     <h4>Aprašymas:</h4>
-    <input type="text" name="prisijungimo_vardas" class="fields" value="" required><br><br>
+    <input type="text" name="aprasas" class="fields" value="" required>
+        @csrf
+        <input type="hidden" name="fk" value="{{$id}}">
     <input type="submit" class="button" name="vert" value="Vertinti"><br><br>
     <br>
     </form>
+    <form class="" action="{{URL::to('/addProblem')}}" method="post">
+    <h4>Galit palikti nusiskundimą:</h4>
+    <input type="text" name="skundas" class="fields" value="" required>
+        @csrf
+        <input type="hidden" name="fk" value="{{$id}}">
+    <input type="submit" class="button" name="skustis" value="Išsaugoti"><br><br>
+    <br>
+    </form>
+    </div>
+    <div class="col-md-4">
+        <h4><?php echo ("Įvertinimas: $average"); ?></h4>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Atsiliepimai</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            while($row2 = mysqli_fetch_array($result2)) :?>
+            <?php $array =array() ?>
+            <td><?php echo $row2['aprasas'];?></td>
+            </tr>
+            <?php endwhile;?>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>

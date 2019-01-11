@@ -194,12 +194,48 @@ SET vardas = '$vardas', pavarde = '$pavarde', tel = '$tel', miestas = '$miestas'
 
     public function addRecomendation(request $request)
     {
-        if (isset($_POST['vert'])) {
-            return redirect('/catalog');
+        $balas = $request->input('balas');
+        $aprasas = $request->input('aprasas');
+        $user=$_SESSION['id'];                      //vertintojas
+        $userID=($request->input('fk'));      //kuri vertina
+        $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+        mysqli_query($dbc, "SET NAMES 'utf8'");
+        if (!$dbc) {
+            die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
         }
-        else{
-            echo "Nepasirinktas";
-        }
+        else {
+            $sql3 = "INSERT INTO rekomendacija(vertinimas, aprasas, id_Rekomendacija, fk_Naudotojasid_Naudotojas, fk_Naudotojasid_Naudotojas1)
+VALUES ('$balas' , '$aprasas', DEFAULT , '$userID','$user')";
 
+            if (mysqli_query($dbc, $sql3))
+            {echo "Įrašyta";
+                return redirect('/catalog');
+                exit;}
+            else die ("Klaida įrašant:" .mysqli_error($dbc));
+
+        }
+    }
+
+    public function addProblem(request $request)
+    {
+        $aprasas = $request->input('skundas');
+        $user=$_SESSION['id'];                      //vertintojas
+        $userID=($request->input('fk'));      //kuri vertina
+        $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+        mysqli_query($dbc, "SET NAMES 'utf8'");
+        if (!$dbc) {
+            die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
+        }
+        else {
+            $sql3 = "INSERT INTO nusiskundimas(aprasas, id_Nusiskundimas, fk_Naudotojasid_Naudotojas, fk_Naudotojasid_Naudotojas1)
+VALUES ('$aprasas', DEFAULT , '$userID','$user')";
+
+            if (mysqli_query($dbc, $sql3))
+            {echo "Įrašyta";
+                return redirect('/catalog');
+                exit;}
+            else die ("Klaida įrašant:" .mysqli_error($dbc));
+
+        }
     }
 }
