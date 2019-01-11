@@ -73,7 +73,7 @@ VALUES ('$vardas', '$pavarde', '$el_pastas', '$prisijungimo_vardas', '$slapt','$
         if(is_null($row['vardas']))
         {
             $_SESSION["error"]="klaida";
-           // return redirect('/login');
+            return redirect('/login');
         }
         else
         {
@@ -127,15 +127,69 @@ VALUES ('$vardas', '$pavarde', '$el_pastas', '$prisijungimo_vardas', '$slapt','$
         }
 
     }
+
     public function editClient(request $request)
     {
-            echo'
+        $id=$request->input('button');
+        $vardas=$request->input('vardas');
+        $pavarde=$request->input('pavarde');
+        $slaptazodis=$request->input('slaptazodis');
+        $slaptazodis2 = $request->input('slaptazodis2');
+        $miestas =$request->input('miestas');
+        $tel =$request->input('mob_numeris');
+        $slapt = password_hash($slaptazodis, PASSWORD_DEFAULT);
+        if($slaptazodis!=$slaptazodis2)
+        {
+            $_SESSION["error"]="klaida";
+            return redirect('/myProfile');
+        }
+        else {
+            $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+            mysqli_query($dbc, "SET NAMES 'utf8'");
+            if (!$dbc) {
+                die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
+            }
+            if ($slaptazodis != null) {
+                $sql = " UPDATE naudotojas
+SET vardas = '$vardas', pavarde = '$pavarde', tel = '$tel', miestas = '$miestas', slaptazodis='$slapt' WHERE id_Naudotojas = '$id'";
+            } else {
+                $sql = " UPDATE naudotojas
+SET vardas = '$vardas', pavarde = '$pavarde', tel = '$tel', miestas = '$miestas' WHERE id_Naudotojas = '$id'";
+            }
+            if (mysqli_query($dbc, $sql)) {
+                echo '
             <script>
             window.onload = function() {
              alert("Asmeninių duomenų redagavimas sėkmingas");
             location.href=("/mainai/public/catalog");  
         }
          </script>';
+            } else die ("Klaida įrašant:" . mysqli_error($dbc));
+        }
+    }
+
+    public function deleteUser(request $request)
+    {
+
+        $id=$request->input('button');
+        $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+        mysqli_query($dbc,"SET NAMES 'utf8'");
+        if (!$dbc) {
+            die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
+        }
+        $sql="update naudotojas set tipas=3 where id_Naudotojas='$id'";
+        if(mysqli_query($dbc, $sql))
+        {
+            $_SESSION["name"] = NULL;
+            $_SESSION["surname"] = NULL;
+            $_SESSION["el"] = NULL;
+            $_SESSION["password"]=NULL;
+            $_SESSION["username"]=NULL;
+            $_SESSION["id"]= NULL;
+            $_SESSION["person"] = NULL;
+            return redirect('/');
+        }
+        else die ("Klaida įrašant:" .mysqli_error($dbc));
     }
 
     public function addRecomendation(request $request)

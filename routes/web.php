@@ -81,4 +81,12 @@ Route::post('/removeTag', 'ItemController@removeTag');
 
 Route::post('/addToBasket', 'ItemController@addToBasket');
 
+Route::post('/search', 'ItemController@search');
+
+Route::post('/filter', 'ItemController@filter');
+
+Route::post('/reservations', 'ItemController@reservations');
+
 Route::post('/addRecomendation', 'UserController@addRecomendation');
+
+Route::post('/deleteUser', 'UserController@deleteUser');

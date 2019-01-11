@@ -60,8 +60,9 @@ session_start();
         <h2>Naudotojo prisijungimas </h2><br>
         <form class="" action="{{URL::to('/logs')}}" method="post">
             @csrf
+
             <h4>Įveskite prisijungimo vardą:</h4>
-            <input type="text" name="prisijungimo_vardas" class="fields" required> <br>
+            <input type="text" name="prisijungimo_vardas" class="fields" value="<?php if(isset($_POST["prisijungimo_vardas"])) echo $_POST["prisijungimo_vardas"]; ?>" required> <br>
             <br>
             <h4>Įveskite slaptažodį:</h4>
             <input type="password" name="slaptazodis"  class="fields" value="" required>

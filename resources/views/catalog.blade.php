@@ -1,15 +1,5 @@
 <?php
 session_start();
-$dbc = mysqli_connect('localhost', 'root', '', 'mainai');
-mysqli_query($dbc,"SET NAMES 'utf8'");
-if (!$dbc) {
-    die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
-}
-else {
-    $sql="SELECT * FROM rubas, spalvos, rubu_tipai, rubu_rusys WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys";
-    $result = mysqli_query($dbc, $sql);
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,11 +27,33 @@ else {
         width: 150px;
         height: 150px;
     }
+    .dropdown2{
+        font-size: 17px;
+        font-weight: bold;
+    }
 
     input{
         background: transparent;
         border-radius: 12px;
         color: #636b6f;
+    }
+    input[type="submit"]
+    {
+        background-color: #A1B0AB;
+        color: black;
+        font-weight: bold;
+        font-size: 15px;
+        width: 120px;
+        border-radius: 12px;
+        font-family: 'Nunito', sans-serif;
+    }
+
+    select
+    {
+        border-radius: 18px;
+        background: #b9bbbe;
+        width: 200px;
+        height: 25px;
     }
 
 </style>
@@ -61,11 +73,12 @@ else {
                     <li class="{{Request::is('/personalHistory')?'active':null }}"><a href="{{url('/personalHistory')}}">Istorija</a></li>
                 </ul>
             </li>
-            <form class="navbar-form navbar-left" action="/action_page.php">
+            <form class="navbar-form navbar-left"  action="{{URL::to('/search')}}" method="post">
+                @csrf
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Ieškoti...">
+                    <input type="text" class="form-control" placeholder="Ieškoti..." name="ieskoti">
                 </div>
-                <button type="button" class="btn btn-default btn-sm">
+                <button type="submit" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </form>
@@ -79,7 +92,43 @@ else {
 </nav>
 
 <div class="container">
+    <form class=""  action="{{URL::to('/filter')}}" method="post">
+        @csrf
+    <div class="dropdown2" >Rūšis
+        <select name="rusis" class="dropdown2" id="rusis">
+            <option value="0"></option>
+            <option value="1">Vaikiškas</option>
+            <option value="2">Vyriškas</option>
+            <option value="3">Moteriškas</option>
+        </select>
+    Spalva
+        <select name="spalva" class="dropdown2" id="spalva">
+            <option value="0"></option>
+            <option value="1">Raudonas</option>
+            <option value="2">Geltona</option>
+            <option value="3">Mėlyna</option>
+            <option value="4">Žalia</option>
+            <option value="5">Violetinė</option>
+            <option value="6">Oranžinė</option>
+            <option value="7">Juoda</option>
+            <option value="8">Balta</option>
+        </select>
+        Tipas
+        <select name="tipas" class="dropdown2" id="tipas" value="<?php if(isset($_SESSION["tipas"])) echo $_SESSION["tipas"]; ?>">
+            <option value="0"></option>
+            <option value="1">Aksesuaras</option>
+            <option value="2">Batai</option>
+            <option value="3">Rankinė</option>
+            <option value="4">Suknelė</option>
+            <option value="5">Sijonas</option>
+            <option value="6">Kelnės</option>
+            <option value="7">Švarkas</option>
+            <option value="8">Palaidinė</option>
+        </select>
+        <input type="submit" name="filtruot" value="Rodyti" placeholder="Rod"></div>
+        <br>
 
+    </form>
         <table class="table table-hover">
             <thead>
             <tr>
@@ -93,10 +142,25 @@ else {
             </tr>
             </thead>
             <tbody>
+
             <?php
+            $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+            mysqli_query($dbc,"SET NAMES 'utf8'");
+            if (!$dbc) {
+                die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
+            }
+            else {
+                if(!empty($_SESSION["rez"])){
+                    $sql=$_SESSION["rez"];}
+                else{
+                $sql="SELECT * FROM rubas, spalvos, rubu_tipai, rubu_rusys WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and busena!=3";
+               }
+                $result = mysqli_query($dbc, $sql);
+            }
+                    $nr = 1;
             while($row = mysqli_fetch_array($result)) :?>
             <?php $array =array() ?>
-            <td><?php echo $row['id_Rubas'];$idd =$row['id_Rubas'];?></td>
+            <td><?php echo $nr;$idd =$row['id_Rubas'];?></td>
             <td><img src="../public/images/<?php echo $row['foto1']?>"></td>
             <td><?php echo $row['pavadinimas'];?></td>
             <td><?php echo $row['aprasymas'];?></td>
@@ -105,6 +169,7 @@ else {
             <td><?php echo $row['rname'];?></td>
             <td><?php echo" <a href=../public/viewItem?itemid=",urlencode($idd),"><input type=button id='$idd' value='Peržiūrėti' ></a> "?></td>
             </tr>
+            <?php $nr++;?>
             <?php endwhile;?>
             </tbody>
         </table>
