@@ -11,6 +11,7 @@ $_SESSION["rusis"] = Null;
 $_SESSION["rez"] = NULL;
 $id = $_GET['itemid'];
 $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+mysqli_query($dbc, "SET NAMES 'utf8'");
 if (!$dbc) {
     die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
 }
@@ -110,14 +111,6 @@ if (!$dbc) {
                     <li class="{{Request::is('/personalHistory')?'active':null }}"><a href="{{url('/personalHistory')}}">Istorija</a></li>
                 </ul>
             </li>
-            <form class="navbar-form navbar-left" action="/action_page.php">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Ieškoti...">
-                </div>
-                <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </form>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="{{Request::is('/tagsList')?'active':null}}"><a href="{{url('/tagsList')}}"><span class="glyphicon glyphicon-heart"></span></a></li>
