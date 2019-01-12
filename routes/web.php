@@ -99,3 +99,5 @@ Route::post('/removeRecomendation', 'UserController@removeRecomendation');
 Route::post('/addProblem', 'UserController@addProblem');
 
 Route::post('/deleteUser', 'UserController@deleteUser');
+
+Route::get('/graphByMonth', 'AdminController@graphByMonth');
