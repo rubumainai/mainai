@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
 session_start();
 if($_SESSION['person']!=4)
@@ -9,10 +10,7 @@ $_SESSION["tipas"] = NULL;
 $_SESSION["spalva"] = NULL;
 $_SESSION["rusis"] = Null;
 $_SESSION["rez"] = NULL;
-?>
-<!DOCTYPE html>
-<?php
-session_start();
+
 $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
 mysqli_query($dbc,"SET NAMES 'utf8'");
 if (!$dbc) {
@@ -37,7 +35,6 @@ else {      //default rodo sausio menesi
         $rezKiekis = mysqli_query($dbc,"SELECT COUNT(id_Rezervacija) AS kiekis FROM rezervacija WHERE MONTH(data)=1 and DAY(data)='$i'");
         $row3 = mysqli_fetch_assoc($rezKiekis);
         $average = $row3['kiekis'];
-        echo $average;
         $rez[$i] = $average;
     }
 }
