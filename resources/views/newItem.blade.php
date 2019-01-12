@@ -27,7 +27,7 @@
         height: 10px;
     }
 
-    input[type="submit"]
+    button
     {
         border-radius: 18px;
         background: #b9bbbe;
@@ -167,7 +167,7 @@
             <input type="file" name="image2" id="image2" required/><br>
             <input type="file" name="image3" id="image3" required/><br>
             <input type="file" name="image4" id="image4" required/><br>
-            <input type="submit"/>
+            <button type=submit name="button" >Išsaugoti</button>
         </form>
 </div>
 </div>

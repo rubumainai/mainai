@@ -7,7 +7,7 @@ if (!$dbc) {
     die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
 }
 else {
-    $sql="SELECT * FROM zyma, rubas, spalvos, rubu_tipai, rubu_rusys WHERE fk_Rubasid_Rubas=id_Rubas and spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and zyma.fk_Naudotojasid_Naudotojas='$user'";
+    $sql="SELECT * FROM zyma, rubas, spalvos, rubu_tipai, rubu_rusys WHERE fk_Rubasid_Rubas=id_Rubas and spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and zyma.fk_Naudotojasid_Naudotojas='$user' and busena!=3";
     $result = mysqli_query($dbc, $sql);
 }
 ?>

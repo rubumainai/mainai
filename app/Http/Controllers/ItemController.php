@@ -73,7 +73,8 @@ VALUES (CURRENT_DATE , DEFAULT , '$itemID','$user')";
             die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
         }
         else {
-            $sql3 = "DELETE FROM rubas WHERE id_Rubas='$itemID'";
+            //$sql3 = "DELETE FROM rubas WHERE id_Rubas='$itemID'";
+            $sql3 = "UPDATE rubas SET busena='3' WHERE id_Rubas='$itemID'";
 
             if (mysqli_query($dbc, $sql3))
             {
