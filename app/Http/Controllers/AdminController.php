@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use App\Http\Requests;
 
 class AdminController extends Controller
 {
@@ -49,4 +51,6 @@ class AdminController extends Controller
         }
         else die ("Klaida įrašant:" .mysqli_error($dbc));
     }
+
+
 }
