@@ -29,7 +29,10 @@ $_SESSION["rez"] = NULL;
         font-weight: 200;height: 100%;
         background-attachment: fixed;
         margin: 0;
-        background-attachment: fixed;
+    }
+    img {
+        width: 150px;
+        height: 150px;
     }
     button[class = "mygt"]
     {
@@ -37,7 +40,7 @@ $_SESSION["rez"] = NULL;
         color: black;
         font-weight: bold;
         font-size: 15px;
-        width: 100px;
+        width: 150px;
         border-radius: 12px;
         font-family: 'Nunito', sans-serif;
     }
@@ -68,38 +71,47 @@ $_SESSION["rez"] = NULL;
     </div>
 </nav>
 <?php }?>
-<form class="" action="{{URL::to('/unblock')}}" method="post">
+<form class="" action="{{URL::to('/reservations')}}" method="post">
     @csrf
     <div class="container">
-        <h2 style="position: center">Užblokuotų naudotojų sąrašas</h2>
+        <h2 style="position: center">Aktyvios rezervacijos</h2>
         <br>
         <table class="table table-hover">
             <thead>
             <tr class="header">
-                <th>Vardas</th>
-                <th>Pavardė</th>
-                <th>El. paštas</th>
-                <th>Registracijos data</th>
+                <th>Data</th>
+                <th>Rūbo savininkas</th>
+                <th>Skolininkas</th>
+                <th>Rūbo pavadinimas</th>
+                <th>Rezervacijos būsena</th>
             </tr>
             </thead>
             <tbody>
             <?php
-            $query = "SELECT * FROM naudotojas where tipas = 2 order by registracijos_data desc";
+            $sql = "SELECT data, id_Rubas, pavadinimas, rezname, skol.vardas as vard,skol.pavarde as pav ,skol.id_Naudotojas as id, naud.id_Naudotojas, naud.vardas, naud.pavarde from rezervacija
+            RIGHT JOIN rubas as rub on rezervacija.fk_Rubasid_Rubas = rub.id_Rubas
+            Right JOIN rezervacijos_busena on rezervacijos_busena.id_rezervacijos_busena = rezervacija.busena
+            LEFT JOIN naudotojas as skol on rezervacija.skolintojas = skol.id_Naudotojas
+            RIGHT JOIN naudotojas as naud on rezervacija.fk_Naudotojasid_Naudotojas = naud.id_Naudotojas
+            where rezervacija.busena=3 or rezervacija.busena=1 or rezervacija.busena=5
+            order by data desc;";
             $connect = mysqli_connect("localhost", "root", "", "mainai");
             mysqli_query($connect,"SET NAMES 'utf8'");
-            $search_result = mysqli_query($connect, $query);
+            $search_result = mysqli_query($connect, $sql);
             while($row = mysqli_fetch_array($search_result)) :?>
             <tr>
-                <td><?php echo $row['vardas'];   $idd =$row['id_Naudotojas'];?></td>
-                <td><?php echo $row['pavarde'];?></td>
-                <td><?php echo $row['email'];?></td>
-                <td><?php echo $row['registracijos_data'];?></td>
-                <td><button type=submit class="mygt" name="button" value="{{$idd}}" onclick="return confirm('Ar tikrai norite atblokuoti naudotoją?')">Atblokuoti</button></td>
+                <td><?php echo $row['data'];$id=$row['id']; $idd = $row['id_Naudotojas'];
+                    $vardas = $row['vard']; $pavarde  = $row['pav']; $rubas = $row['id_Rubas']; $pavadinimas = $row['pavadinimas'];
+                    $vardas2 = $row['vardas']; $pavarde2  = $row['pavarde']?></td>
+                <td><?php echo" <a href=../public/otherProfile?userid=",urlencode($id),">{$vardas} {$pavarde}</a> "?></td>
+                <td><?php echo" <a href=../public/otherProfile?userid=",urlencode($idd),">{$vardas2} {$pavarde2}</a> "?></td>
+                <td><?php echo" <a href=../public/viewItem?itemid=",urlencode($rubas),">{$pavadinimas}</a> "?></td>
+                <td><?php echo $row['rezname'];?></td>
             </tr>
-
             <?php endwhile;?>
             </tbody>
         </table>
+        <br>
     </div>
 </form>
 </body>

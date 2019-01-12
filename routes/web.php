@@ -47,6 +47,11 @@ Route::get('/newItem', function () {
 Route::get('/myProfile', function () {
     return view('myProfile');
 });
+
+Route::get('/activeReservations', function () {
+    return view('activeReservations');
+});
+
 Route::get('/myCatalog', function () {
     return view('myCatalog');
 });

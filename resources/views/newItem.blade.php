@@ -1,3 +1,15 @@
+<?php
+session_start();
+if($_SESSION['person']!=1)
+{
+    echo "<h4  style='color: red'>Jums nepakanka teisių peržiūrėti šį puslapį</h4>";
+    die;
+}
+$_SESSION["tipas"] = NULL;
+$_SESSION["spalva"] = NULL;
+$_SESSION["rusis"] = Null;
+$_SESSION["rez"] = NULL;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +26,10 @@
         background: linear-gradient(to bottom right, #B89685, #F8F4E3);
         color: #636b6f;
         font-family: 'Nunito', sans-serif;
-        font-weight: 200;height: 100%;
-        background-attachment: fixed;
+        font-weight: 200;
         margin: 0;
+        height: 100%;
+        background-attachment: fixed;
     }
     input[class="fields"]
     {
@@ -78,10 +91,11 @@
     }
 
     a{
-        font-size: 15px;
+        font-size: 14px;
     }
 
 </style>
+<?php if($_SESSION['person']==1) {?>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -98,14 +112,6 @@
                     <li class="{{Request::is('/personalHistory')?'active':null }}"><a href="{{url('/personalHistory')}}">Istorija</a></li>
                 </ul>
             </li>
-            <form class="navbar-form navbar-left" action="/action_page.php">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Ieškoti...">
-                </div>
-                <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </form>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="{{Request::is('/tagsList')?'active':null}}"><a href="{{url('/tagsList')}}"><span class="glyphicon glyphicon-heart"></span></a></li>
@@ -114,6 +120,7 @@
         </ul>
     </div>
 </nav>
+<?php }?>
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
         <h2>Naujas įkėlimas</h2>
@@ -164,9 +171,9 @@
             <br>
             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
             <input type="file" name="image" id="image" required/><br>
-            <input type="file" name="image2" id="image2" required/><br>
-            <input type="file" name="image3" id="image3" required/><br>
-            <input type="file" name="image4" id="image4" required/><br>
+            <input type="file" name="image2" id="image2" /><br>
+            <input type="file" name="image3" id="image3" /><br>
+            <input type="file" name="image4" id="image4" /><br>
             <button type=submit name="button" >Išsaugoti</button>
         </form>
 </div>

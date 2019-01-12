@@ -1,3 +1,15 @@
+<?php
+session_start();
+if($_SESSION['person']!=4)
+{
+    echo "<h4  style='color: red'>Jums nepakanka teisių peržiūrėti šį puslapį</h4>";
+    die;
+}
+$_SESSION["tipas"] = NULL;
+$_SESSION["spalva"] = NULL;
+$_SESSION["rusis"] = Null;
+$_SESSION["rez"] = NULL;
+?>
 <!DOCTYPE html>
 <?php
 session_start();
@@ -100,11 +112,10 @@ $dataPoints = array(
     html, body {
         background: linear-gradient(to bottom right, #B89685, #F8F4E3);
         color: #636b6f;
-        font-size: 20px;
         font-family: 'Nunito', sans-serif;
-        font-weight: 200;
+        font-weight: 200;height: 100%;
+        background-attachment: fixed;
         margin: 0;
-        height: 100%;
         background-attachment: fixed;
     }
     select[name="men"]
@@ -150,6 +161,7 @@ $dataPoints = array(
         font-size: 25px;
     }
 </style>
+<?php if($_SESSION['person']==4) {?>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -159,15 +171,22 @@ $dataPoints = array(
             <li class="{{Request::is('/catalog')?'active':null }}"><a href="{{url('/catalog')}}">Katalogas</a></li>
             <li class="{{Request::is('/blockedUsersList')?'active':null }}"><a href="{{url('/blockedUsersList')}}">Užblokuoti naudotojai</a></li>
             <li class="{{Request::is('/problemsList')?'active':null }}"><a href="{{url('/problemsList')}}">Nusiskundimai</a></li>
-            <li class="{{Request::is('/registrationList')?'active':null }}"><a href="{{url('/registrationList')}}">Rezervacijos</a></li>
-            <li class="{{Request::is('/registrationStatistic')?'active':null }}"><a href="{{url('/registrationStatistic')}}">Statistika</a></li>
+            <li class="{{Request::is('/activeReservations')?'active':null }}"><a href="{{url('/activeReservations')}}">Rezervacijos</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistika
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{Request::is('/registrationStatistic')?'active':null }}"><a href="{{url('/registrationStatistic')}}">Naudotojai</a></li>
+                    <li class="{{Request::is('/registrationList')?'active':null }}"><a href="{{url('/registrationList')}}">Rezervacijos</a></li>
+                </ul>
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="{{Request::is('/logout')?'active':null}}"><a href="{{url('/logout')}}"><span class="glyphicon glyphicon-log-out"></span></a></li>
         </ul>
     </div>
 </nav>
-
+<?php }?>
 <div class="container">
     <h2>Rezervacijų kiekis per pasirinktą mėnesį</h2>
     <form method = "get">

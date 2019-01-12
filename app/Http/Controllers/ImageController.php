@@ -17,19 +17,25 @@ class ImageController extends Controller
         $image->move($destinationPath, $input);
 
         $image2=$request->file('image2');
+        if($image2!=null){
         $input2=$image2->getClientOriginalName();
         $destinationPath=public_path('/images');
-        $image2->move($destinationPath, $input2);
+        $image2->move($destinationPath, $input2);}
+        else $input2=null;
 
         $image3=$request->file('image3');
+        if($image3!=null){
         $input3=$image3->getClientOriginalName();
         $destinationPath=public_path('/images');
-        $image3->move($destinationPath, $input3);
+        $image3->move($destinationPath, $input3);}
+        else $input3=null;
 
         $image4=$request->file('image4');
+        if($image4!=null){
         $input4=$image4->getClientOriginalName();
         $destinationPath=public_path('/images');
-        $image4->move($destinationPath, $input4);
+        $image4->move($destinationPath, $input4);}
+        else $input4=null;
 
         $pavadinimas=$request->input('pavadinimas');
         $aprasymas=$request->input('aprasymas');
@@ -49,15 +55,14 @@ VALUES ('$input', '$input2', '$input3','$input4','$pavadinimas', '$aprasymas', '
 
             if (mysqli_query($dbc, $sql3))
             {
-                /* echo '
+                 echo '
              <script>
              window.onload = function() {
               alert("Drabužis sėkmingai pridėtas");
-             location.href=("/mainai/public/catalog");  */
-                return redirect('/catalog');
+             location.href=("/mainai/public/catalog");  
             }
-            // </script>';
-            //   }
+             </script>';
+              }
             else die ("Klaida įrašant:" . mysqli_error($dbc));
         }
     }

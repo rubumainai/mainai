@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION["login"] = NULL;
 ?>
 <head>
     <title>Mainyk</title>
@@ -60,35 +61,6 @@ session_start();
         <form class="" action="{{URL::to('/store')}}" method="post">
             @csrf
             <h2>Vartotojo registracija</h2><br>
-            <h4>Įveskite vardą:</h4>
-            <input type="text" name="vardas" class="fields" value="" required><br>
-            <br>
-            <h4>Įveskite pavardę:</h4>
-            <input type="text" name="pavarde" class="fields" value="" required><br>
-            <br>
-            <h4>Įveskite el. pašto adresą:</h4>
-            <input type="email" name="el_pastas" class="fields" value="" required><br>
-            <br>
-            <h4>Įveskite gimimo datą:</h4>
-            <input type="date" name="gimimo_data" class="fields" value="" min="1900-01-01" required><br>
-            <br>
-            <h4>Įveskite telefono numerį:</h4>
-            <input type="text" name="mob_numeris" class="fields" value="" minlength="9" maxlength="9" required><br>
-            <br>
-            <h4>Įveskite gyvenamąjį miestą:</h4>
-            <input type="text" name="miestas" class="fields" value="" required><br>
-            <br>
-            <h4>Įveskite prisijungimo vardą:</h4>
-            <input type="text" name="prisijungimo_vardas" class="fields" value="" required><br>
-            <br>
-            <h4>Įveskite slaptažodį:</h4>
-            <input type="password" name="slaptazodis" class="fields" value="" required><br>
-            <br>
-            <h4>Pakartokite slaptažodį:</h4>
-            <input type="password" name="slaptazodis2" class="fields" value="" required><br>
-            <br>
-            <input type=submit name="button" class="button" value="Patvirtinti">
-            <br>
             <?php
             if(!empty($_SESSION['error']))
             {
@@ -104,6 +76,35 @@ session_start();
                 }
             }
             ?>
+            <h4>Įveskite vardą:</h4>
+            <input type="text" name="vardas" class="fields" value="<?php if(!empty($_SESSION['vard'])) {echo $_SESSION['vard'];}?>" required><br>
+            <br>
+            <h4>Įveskite pavardę:</h4>
+            <input type="text" name="pavarde" class="fields" value="<?php if(!empty($_SESSION['pav'])) {echo $_SESSION['pav'];}?>" required><br>
+            <br>
+            <h4>Įveskite el. pašto adresą:</h4>
+            <input type="email" name="el_pastas" class="fields" value="<?php if(!empty($_SESSION['past'])) {echo $_SESSION['past'];}?>" required><br>
+            <br>
+            <h4>Įveskite gimimo datą:</h4>
+            <input type="date" name="gimimo_data" class="fields" value="<?php if(!empty($_SESSION['data'])) {echo $_SESSION['data'];}?>" min="1900-01-01" required><br>
+            <br>
+            <h4>Įveskite telefono numerį:</h4>
+            <input type="text" name="mob_numeris" class="fields" value="<?php if(!empty($_SESSION['tel'])) {echo $_SESSION['tel'];}?>" minlength="9" maxlength="9" required><br>
+            <br>
+            <h4>Įveskite gyvenamąjį miestą:</h4>
+            <input type="text" name="miestas" class="fields" value="<?php if(!empty($_SESSION['miest'])) {echo $_SESSION['miest'];}?>" required><br>
+            <br>
+            <h4>Įveskite prisijungimo vardą:</h4>
+            <input type="text" name="prisijungimo_vardas" class="fields" value="<?php if(!empty($_SESSION['log'])) {echo $_SESSION['log'];}?>" required><br>
+            <br>
+            <h4>Įveskite slaptažodį:</h4>
+            <input type="password" name="slaptazodis" class="fields" value="" required><br>
+            <br>
+            <h4>Pakartokite slaptažodį:</h4>
+            <input type="password" name="slaptazodis2" class="fields" value="" required><br>
+            <br>
+            <input type=submit name="button" class="button" value="Patvirtinti">
+            <br>
         </form>
     </div>
 </div>

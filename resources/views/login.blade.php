@@ -1,5 +1,12 @@
 <?php
 session_start();
+$_SESSION["vard"] = NULL;
+$_SESSION["pav"] = NULL;
+$_SESSION["past"] = NULL;
+$_SESSION["data"] = NULL;
+$_SESSION["tel"] = NULL;
+$_SESSION["miest"] = NULL;
+$_SESSION["log"] = NULL;
 ?>
 <head>
     <title>Mainyk</title>
@@ -58,32 +65,33 @@ session_start();
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
         <h2>Naudotojo prisijungimas </h2><br>
+        <?php
+        if(!empty($_SESSION['error']))
+        {
+            if (   $_SESSION['error']=='klaida'  )
+            {
+                echo "<h4  style='color: red'>Neteisingai įvestas prisijungimo vardas arba slaptažodis</h4>";
+                $_SESSION['error'] = "";
+            }
+            else if (   $_SESSION['error']=='klaida2'  )
+            {
+                echo "<h4  style='color: red'>Paskyra buvo pašalinta arba užblokuota</h4>";
+                $_SESSION['error'] = "";
+            }
+        }
+        ?>
         <form class="" action="{{URL::to('/logs')}}" method="post">
             @csrf
-
             <h4>Įveskite prisijungimo vardą:</h4>
-            <input type="text" name="prisijungimo_vardas" class="fields" value="<?php if(isset($_POST["prisijungimo_vardas"])) echo $_POST["prisijungimo_vardas"]; ?>" required> <br>
+            <input type="text" name="prisijungimo_vardas" class="fields" value="<?php
+            if(!empty($_SESSION['login'])) {echo $_SESSION['login'];}
+            ?>" required> <br>
             <br>
             <h4>Įveskite slaptažodį:</h4>
             <input type="password" name="slaptazodis"  class="fields" value="" required>
             <br><br>
-            <input type=submit class="button" name="button" value="Prisijungti">
+           <input type=submit class="button" name="button" value="Prisijungti">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
-            <?php
-            if(!empty($_SESSION['error']))
-            {
-                if (   $_SESSION['error']=='klaida'  )
-                {
-                    echo "<h4  style='color: red'>Neteisingai įvestas prisijungimo vardas arba slaptažodis</h4>";
-                    $_SESSION['error'] = "";
-                }
-                else if (   $_SESSION['error']=='klaida2'  )
-                {
-                    echo "<h4  style='color: red'>Paskyra buvo pašalinta arba užblokuota</h4>";
-                    $_SESSION['error'] = "";
-                }
-            }
-            ?>
         </form>
     </div>
 </div>

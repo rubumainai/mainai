@@ -1,5 +1,14 @@
 <?php
 session_start();
+if($_SESSION['person']!=1)
+{
+    echo "<h4  style='color: red'>Jums nepakanka teisių peržiūrėti šį puslapį</h4>";
+    die;
+}
+$_SESSION["tipas"] = NULL;
+$_SESSION["spalva"] = NULL;
+$_SESSION["rusis"] = Null;
+$_SESSION["rez"] = NULL;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,14 +75,6 @@ session_start();
                     <li class="{{Request::is('/personalHistory')?'active':null }}"><a href="{{url('/personalHistory')}}">Istorija</a></li>
                 </ul>
             </li>
-            <form class="navbar-form navbar-left" action="/action_page.php">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Ieškoti...">
-                </div>
-                <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </form>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="{{Request::is('/tagsList')?'active':null}}"><a href="{{url('/tagsList')}}"><span class="glyphicon glyphicon-heart"></span></a></li>

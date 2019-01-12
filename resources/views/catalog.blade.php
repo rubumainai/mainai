@@ -1,5 +1,10 @@
 <?php
 session_start();
+if($_SESSION['person']!=1 && $_SESSION['person']!=4)
+{
+    echo "<h4  style='color: red'>Turite prisijungti, kad galėtumėte peržiūrėti šį puslapį</h4>";
+    die;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +29,7 @@ session_start();
     }
 
     img {
-        width: 150px;
+        width: 120px;
         height: 150px;
     }
     .dropdown2{
@@ -57,6 +62,7 @@ session_start();
     }
 
 </style>
+<?php if($_SESSION['person']==1) {?>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -90,6 +96,33 @@ session_start();
         </ul>
     </div>
 </nav>
+<?php }?>
+<?php if($_SESSION['person']==4) {?>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Mainyk</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="{{Request::is('/catalog')?'active':null }}"><a href="{{url('/catalog')}}">Katalogas</a></li>
+            <li class="{{Request::is('/blockedUsersList')?'active':null }}"><a href="{{url('/blockedUsersList')}}">Užblokuoti naudotojai</a></li>
+            <li class="{{Request::is('/problemsList')?'active':null }}"><a href="{{url('/problemsList')}}">Nusiskundimai</a></li>
+            <li class="{{Request::is('/activeReservations')?'active':null }}"><a href="{{url('/activeReservations')}}">Rezervacijos</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistika
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{Request::is('/registrationStatistic')?'active':null }}"><a href="{{url('/registrationStatistic')}}">Naudotojai</a></li>
+                    <li class="{{Request::is('/registrationList')?'active':null }}"><a href="{{url('/registrationList')}}">Rezervacijos</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="{{Request::is('/logout')?'active':null}}"><a href="{{url('/logout')}}"><span class="glyphicon glyphicon-log-out"></span></a></li>
+        </ul>
+    </div>
+</nav>
+<?php }?>
 
 <div class="container">
     <form class=""  action="{{URL::to('/filter')}}" method="post">
@@ -97,35 +130,36 @@ session_start();
     <div class="dropdown2" >Rūšis
         <select name="rusis" class="dropdown2" id="rusis">
             <option value="0"></option>
-            <option value="1">Vaikiškas</option>
-            <option value="2">Vyriškas</option>
-            <option value="3">Moteriškas</option>
+            <option value="1" <?php echo ($_SESSION["rusis"] == 1)?"selected":"" ?>>Vaikiškas</option>
+            <option value="2" <?php echo ($_SESSION["rusis"] == 2)?"selected":"" ?>>Vyriškas</option>
+            <option value="3" <?php echo ($_SESSION["rusis"] == 3)?"selected":"" ?>>Moteriškas</option>
         </select>
     Spalva
         <select name="spalva" class="dropdown2" id="spalva">
             <option value="0"></option>
-            <option value="1">Raudonas</option>
-            <option value="2">Geltona</option>
-            <option value="3">Mėlyna</option>
-            <option value="4">Žalia</option>
-            <option value="5">Violetinė</option>
-            <option value="6">Oranžinė</option>
-            <option value="7">Juoda</option>
-            <option value="8">Balta</option>
+            <option value="1" <?php echo ($_SESSION["spalva"] == 1)?"selected":"" ?>>Raudonas</option>
+            <option value="2" <?php echo ($_SESSION["spalva"] == 2)?"selected":"" ?>>Geltona</option>
+            <option value="3" <?php echo ($_SESSION["spalva"] == 3)?"selected":"" ?>>Mėlyna</option>
+            <option value="4" <?php echo ($_SESSION["spalva"] == 4)?"selected":"" ?>>Žalia</option>
+            <option value="5" <?php echo ($_SESSION["spalva"] == 5)?"selected":"" ?>>Violetinė</option>
+            <option value="6" <?php echo ($_SESSION["spalva"] == 6)?"selected":"" ?>>Oranžinė</option>
+            <option value="7" <?php echo ($_SESSION["spalva"] == 7)?"selected":"" ?>>Juoda</option>
+            <option value="8" <?php echo ($_SESSION["spalva"] == 8)?"selected":"" ?>>Balta</option>
         </select>
         Tipas
-        <select name="tipas" class="dropdown2" id="tipas" value="<?php if(isset($_SESSION["tipas"])) echo $_SESSION["tipas"]; ?>">
+        <select name="tipas" class="dropdown2" id="tipas">
             <option value="0"></option>
-            <option value="1">Aksesuaras</option>
-            <option value="2">Batai</option>
-            <option value="3">Rankinė</option>
-            <option value="4">Suknelė</option>
-            <option value="5">Sijonas</option>
-            <option value="6">Kelnės</option>
-            <option value="7">Švarkas</option>
-            <option value="8">Palaidinė</option>
+            <option value="1" <?php echo ($_SESSION["tipas"] == 1)?"selected":"" ?>>Aksesuaras</option>
+            <option value="2" <?php echo ($_SESSION["tipas"] == 2)?"selected":"" ?>>Batai</option>
+            <option value="3" <?php echo ($_SESSION["tipas"] == 3)?"selected":"" ?>>Rankinė</option>
+            <option value="4" <?php echo ($_SESSION["tipas"] == 4)?"selected":"" ?>>Suknelė</option>
+            <option value="5" <?php echo ($_SESSION["tipas"] == 5)?"selected":"" ?>>Sijonas</option>
+            <option value="6" <?php echo ($_SESSION["tipas"] == 6)?"selected":"" ?>>Kelnės</option>
+            <option value="7" <?php echo ($_SESSION["tipas"] == 7)?"selected":"" ?>>Švarkas</option>
+            <option value="8" <?php echo ($_SESSION["tipas"] == 8)?"selected":"" ?>>Palaidinė</option>
         </select>
-        <input type="submit" name="filtruot" value="Rodyti" placeholder="Rod"></div>
+        <input type="submit" name="filtruot" value="Rodyti" placeholder="Rod">
+        <input type="submit" name="valyti" value="Valyti filtrą"></div>
         <br>
 
     </form>
@@ -166,7 +200,7 @@ session_start();
             <td><?php echo $row['name'];?></td>
             <td><?php echo $row['tname'];?></td>
             <td><?php echo $row['rname'];?></td>
-            <td><?php echo" <a href=../public/viewItem?itemid=",urlencode($idd),"><input type=button id='$idd' value='Peržiūrėti' ></a> "?></td>
+            <td><?php echo" <a href=../public/viewItem?itemid=",urlencode($idd),"><input type=submit style='width:100px' id='$idd' value='Peržiūrėti' ></a> "?></td>
             </tr>
             <?php $nr++;?>
             <?php endwhile;?>
