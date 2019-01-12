@@ -208,11 +208,43 @@ SET vardas = '$vardas', pavarde = '$pavarde', tel = '$tel', miestas = '$miestas'
 VALUES ('$balas' , '$aprasas', DEFAULT , '$userID','$user')";
 
             if (mysqli_query($dbc, $sql3))
-            {echo "Įrašyta";
+            {
+               /* echo '
+            <script>
+            window.onload = function() {
+             alert("Vertinimas sėkmingai pridėtas");
+            location.href=("/mainai/public/catalog");  */
                 return redirect('/catalog');
-                exit;}
-            else die ("Klaida įrašant:" .mysqli_error($dbc));
+        }
+        // </script>';
+         //   }
+            else die ("Klaida įrašant:" . mysqli_error($dbc));
+        }
+    }
 
+    public function removeRecomendation(request $request)
+    {
+        $recID=($request->input('fk'));
+        $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+        mysqli_query($dbc, "SET NAMES 'utf8'");
+        if (!$dbc) {
+            die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
+        }
+        else {
+            $sql3 = "DELETE FROM rekomendacija WHERE id_Rekomendacija='$recID'";
+
+            if (mysqli_query($dbc, $sql3))
+            {
+                /* echo '
+             <script>
+             window.onload = function() {
+              alert("Vertinimas sėkmingai ištrintas");
+             location.href=("/mainai/public/catalog");  */
+                return redirect('/catalog');
+            }
+                // </script>';
+                //   }
+            else die ("Klaida ištrinant:" . mysqli_error($dbc));
         }
     }
 
@@ -231,11 +263,17 @@ VALUES ('$balas' , '$aprasas', DEFAULT , '$userID','$user')";
 VALUES ('$aprasas', DEFAULT , '$userID','$user')";
 
             if (mysqli_query($dbc, $sql3))
-            {echo "Įrašyta";
+            {
+                /* echo '
+             <script>
+             window.onload = function() {
+              alert("Nusiskundimas sėkmingai pridėtas");
+             location.href=("/mainai/public/catalog");  */
                 return redirect('/catalog');
-                exit;}
-            else die ("Klaida įrašant:" .mysqli_error($dbc));
-
+            }
+            // </script>';
+            //   }
+            else die ("Klaida įrašant:" . mysqli_error($dbc));
         }
     }
 }

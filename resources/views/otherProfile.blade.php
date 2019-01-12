@@ -84,6 +84,13 @@ $average = $row3['vert'];
     .table{
         font-size: 19px;
     }
+    button{
+        background: transparent;
+        border-radius: 12px;
+        width: 100px;
+        color: #636b6f;
+        font-size: 15px;
+    }
 </style>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -118,7 +125,7 @@ $average = $row3['vert'];
     </div>
 </nav>
 <div class="container">
-    <div class="col-md-8">
+    <div class="col-md-6">
 <h2>Naudotojo informacija</h2><br>
     <?php
     $row = mysqli_fetch_array($result); ?>
@@ -155,7 +162,7 @@ $average = $row3['vert'];
     <br>
     </form>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <h4><?php echo ("Įvertinimas: $average"); ?></h4>
         <table class="table table-hover">
             <thead>
@@ -167,7 +174,19 @@ $average = $row3['vert'];
             <?php
             while($row2 = mysqli_fetch_array($result2)) :?>
             <?php $array =array() ?>
-            <td><?php echo $row2['aprasas'];?></td>
+            <td><?php echo $row2['aprasas']; $idd=$row2['id_Rekomendacija'];?></td>
+            <form class="" action="{{URL::to('/removeRecomendation')}}" method="post">
+                @csrf
+                <input type="hidden" name="fk" value="{{$idd}}">
+            <?php if($_SESSION["username"]== "admin")
+            {
+            ?>
+            <td>
+                <button type=submit name="button" onclick="return confirm('Ar tikrai norite ištrinti atsiliepimą?')"><span class="glyphicon glyphicon-trash"></span> Šalinti</button>
+            </td>
+            <?php
+            }?>
+            </form>
             </tr>
             <?php endwhile;?>
             </tbody>

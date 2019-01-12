@@ -142,7 +142,6 @@ session_start();
             </tr>
             </thead>
             <tbody>
-
             <?php
             $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
             mysqli_query($dbc,"SET NAMES 'utf8'");
