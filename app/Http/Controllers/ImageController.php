@@ -48,11 +48,17 @@ class ImageController extends Controller
 VALUES ('$input', '$input2', '$input3','$input4','$pavadinimas', '$aprasymas', '$spalva', '$tipas', 1,'$rusis', DEFAULT, '$user')";
 
             if (mysqli_query($dbc, $sql3))
-            {echo "Įrašyta";
+            {
+                /* echo '
+             <script>
+             window.onload = function() {
+              alert("Drabužis sėkmingai pridėtas");
+             location.href=("/mainai/public/catalog");  */
                 return redirect('/catalog');
-                exit;}
-            else die ("Klaida įrašant:" .mysqli_error($dbc));
-
+            }
+            // </script>';
+            //   }
+            else die ("Klaida įrašant:" . mysqli_error($dbc));
         }
     }
 

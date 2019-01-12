@@ -89,6 +89,8 @@ Route::post('/reservations', 'ItemController@reservations');
 
 Route::post('/addRecomendation', 'UserController@addRecomendation');
 
+Route::post('/removeRecomendation', 'UserController@removeRecomendation');
+
 Route::post('/addProblem', 'UserController@addProblem');
 
 Route::post('/deleteUser', 'UserController@deleteUser');

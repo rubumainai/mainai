@@ -22,11 +22,17 @@ class ItemController extends Controller
 VALUES (CURRENT_DATE , DEFAULT , '$itemID','$user')";
 
             if (mysqli_query($dbc, $sql3))
-            {echo "Įrašyta";
+            {
+                /* echo '
+             <script>
+             window.onload = function() {
+              alert("Žyma sėkmingai pridėta");
+             location.href=("/mainai/public/catalog");  */
                 return redirect('/catalog');
-                exit;}
-            else die ("Klaida įrašant:" .mysqli_error($dbc));
-
+            }
+            // </script>';
+            //   }
+            else die ("Klaida įrašant:" . mysqli_error($dbc));
         }
     }
 
@@ -43,11 +49,17 @@ VALUES (CURRENT_DATE , DEFAULT , '$itemID','$user')";
             $sql3 = "DELETE FROM zyma WHERE fk_Rubasid_Rubas='$itemID'";
 
             if (mysqli_query($dbc, $sql3))
-            {echo "Ištrinta";
+            {
+                /* echo '
+             <script>
+             window.onload = function() {
+              alert("Žyma sėkmingai ištrinta");
+             location.href=("/mainai/public/tagsList");  */
                 return redirect('/tagsList');
-                exit;}
-            else die ("Klaida trinant:" .mysqli_error($dbc));
-
+            }
+            // </script>';
+            //   }
+            else die ("Klaida ištrinant:" . mysqli_error($dbc));
         }
     }
 
@@ -64,10 +76,17 @@ VALUES (CURRENT_DATE , DEFAULT , '$itemID','$user')";
             $sql3 = "DELETE FROM rubas WHERE id_Rubas='$itemID'";
 
             if (mysqli_query($dbc, $sql3))
-            {echo "Ištrinta";
+            {
+                /* echo '
+             <script>
+             window.onload = function() {
+              alert("Drabužis sėkmingai ištrintas");
+             location.href=("/mainai/public/myCatalog");  */
                 return redirect('/myCatalog');
-                exit;}
-            else die ("Klaida trinant:" .mysqli_error($dbc));
+            }
+            // </script>';
+            //   }
+            else die ("Klaida ištrinant:" . mysqli_error($dbc));
 
         }
     }
