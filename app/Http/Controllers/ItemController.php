@@ -20,20 +20,33 @@ class ItemController extends Controller
             die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
         }
         else {
+
+            $sql1="select * from zyma where fk_Naudotojasid_Naudotojas = '$user' and fk_Rubasid_Rubas='$itemID'";
+            $data = mysqli_query($dbc, $sql1);
+            $row = mysqli_fetch_assoc($data);
+            if (!is_null($row['data']))
+            {
+                echo '
+            <script>
+            window.onload = function() {
+             alert("Tokia žyma jau egzistuoja");
+            location.href=("/mainai/public/catalog");  
+        }
+         </script>';
+                die;
+            }
             $sql3 = "INSERT INTO zyma(data, id_Zyma, fk_Rubasid_Rubas, fk_Naudotojasid_Naudotojas)
 VALUES (CURRENT_DATE , DEFAULT , '$itemID','$user')";
 
-            if (mysqli_query($dbc, $sql3))
-            {
-                /* echo '
-             <script>
-             window.onload = function() {
-              alert("Žyma sėkmingai pridėta");
-             location.href=("/mainai/public/catalog");  */
-                return redirect('/catalog');
+            if (mysqli_query($dbc, $sql3)) {
+                echo '
+            <script>
+            window.onload = function() {
+             alert("Žyma sėkmingai pridėta");
+            location.href=("/mainai/public/catalog");  
+        }
+         </script>';
             }
-            // </script>';
-            //   }
             else die ("Klaida įrašant:" . mysqli_error($dbc));
         }
     }

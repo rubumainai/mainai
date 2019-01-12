@@ -312,7 +312,7 @@ VALUES ('$balas' , '$aprasas', DEFAULT , '$userID','$user')";
         }
         else {
             $sql3 = "INSERT INTO nusiskundimas(aprasas, id_Nusiskundimas, fk_Naudotojasid_Naudotojas, fk_Naudotojasid_Naudotojas1)
-VALUES ('$aprasas', DEFAULT , '$userID','$user')";
+VALUES ('$aprasas', DEFAULT , '$user','$userID')";
 
             if (mysqli_query($dbc, $sql3))
             {

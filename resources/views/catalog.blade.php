@@ -29,7 +29,7 @@ if($_SESSION['person']!=1 && $_SESSION['person']!=4)
     }
 
     img {
-        width: 150px;
+        width: 120px;
         height: 150px;
     }
     .dropdown2{
@@ -200,7 +200,7 @@ if($_SESSION['person']!=1 && $_SESSION['person']!=4)
             <td><?php echo $row['name'];?></td>
             <td><?php echo $row['tname'];?></td>
             <td><?php echo $row['rname'];?></td>
-            <td><?php echo" <a href=../public/viewItem?itemid=",urlencode($idd),"><input type=button id='$idd' value='Peržiūrėti' ></a> "?></td>
+            <td><?php echo" <a href=../public/viewItem?itemid=",urlencode($idd),"><input type=submit style='width:100px' id='$idd' value='Peržiūrėti' ></a> "?></td>
             </tr>
             <?php $nr++;?>
             <?php endwhile;?>

@@ -144,14 +144,6 @@ $average = $row3['vert'];
                     <li class="{{Request::is('/personalHistory')?'active':null }}"><a href="{{url('/personalHistory')}}">Istorija</a></li>
                 </ul>
             </li>
-            <form class="navbar-form navbar-left" action="/action_page.php">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Ieškoti...">
-                </div>
-                <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </form>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="{{Request::is('/tagsList')?'active':null}}"><a href="{{url('/tagsList')}}"><span class="glyphicon glyphicon-heart"></span></a></li>
@@ -187,7 +179,7 @@ $average = $row3['vert'];
     <input type="text" name="aprasas" class="fields" value="" required>
         @csrf
         <input type="hidden" name="fk" value="{{$id}}">
-    <input type="submit" class="button" name="vert" value="Vertinti"><br><br>
+    <input type="submit" class="button" name="vert" onclick="return confirm('Ar tikrai norite pateikti atsiliepimą?')" value="Vertinti"><br><br>
     <br>
     </form>
     <form class="" action="{{URL::to('/addProblem')}}" method="post">
@@ -195,7 +187,7 @@ $average = $row3['vert'];
     <input type="text" name="skundas" class="fields" value="" required>
         @csrf
         <input type="hidden" name="fk" value="{{$id}}">
-    <input type="submit" class="button" name="skustis" value="Išsaugoti"><br><br>
+    <input type="submit" class="button" name="skustis" onclick="return confirm('Ar tikrai norite pateikti skundą?')" value="Išsaugoti"><br><br>
     <br>
     </form>
     </div>

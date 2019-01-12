@@ -26,9 +26,10 @@ $_SESSION["rez"] = NULL;
         background: linear-gradient(to bottom right, #B89685, #F8F4E3);
         color: #636b6f;
         font-family: 'Nunito', sans-serif;
-        font-weight: 200;height: 100%;
-        background-attachment: fixed;
+        font-weight: 200;
         margin: 0;
+        height: 100%;
+        background-attachment: fixed;
     }
     input[class="fields"]
     {
@@ -90,10 +91,11 @@ $_SESSION["rez"] = NULL;
     }
 
     a{
-        font-size: 15px;
+        font-size: 14px;
     }
 
 </style>
+<?php if($_SESSION['person']==1) {?>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -110,14 +112,6 @@ $_SESSION["rez"] = NULL;
                     <li class="{{Request::is('/personalHistory')?'active':null }}"><a href="{{url('/personalHistory')}}">Istorija</a></li>
                 </ul>
             </li>
-            <form class="navbar-form navbar-left" action="/action_page.php">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Ieškoti...">
-                </div>
-                <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </form>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="{{Request::is('/tagsList')?'active':null}}"><a href="{{url('/tagsList')}}"><span class="glyphicon glyphicon-heart"></span></a></li>
@@ -126,6 +120,7 @@ $_SESSION["rez"] = NULL;
         </ul>
     </div>
 </nav>
+<?php }?>
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
         <h2>Naujas įkėlimas</h2>
@@ -176,9 +171,9 @@ $_SESSION["rez"] = NULL;
             <br>
             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
             <input type="file" name="image" id="image" required/><br>
-            <input type="file" name="image2" id="image2" required/><br>
-            <input type="file" name="image3" id="image3" required/><br>
-            <input type="file" name="image4" id="image4" required/><br>
+            <input type="file" name="image2" id="image2" /><br>
+            <input type="file" name="image3" id="image3" /><br>
+            <input type="file" name="image4" id="image4" /><br>
             <button type=submit name="button" >Išsaugoti</button>
         </form>
 </div>
