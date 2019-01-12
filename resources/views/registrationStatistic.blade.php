@@ -9,6 +9,70 @@ $_SESSION["tipas"] = NULL;
 $_SESSION["spalva"] = NULL;
 $_SESSION["rusis"] = Null;
 $_SESSION["rez"] = NULL;
+
+$dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+mysqli_query($dbc,"SET NAMES 'utf8'");
+if (!$dbc) {
+    die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
+}
+else if(isset($_GET['submit']))
+{
+    $men = $_GET['men'];
+    $metai = $_GET['metai'];
+    $k = 0;
+    $rez = [];
+    for ($i = 1;$i <= 31;$i++) {
+        $rezKiekis = mysqli_query($dbc,"SELECT COUNT(id_Naudotojas) AS kiekis FROM naudotojas WHERE YEAR(registracijos_data)='$metai' and MONTH(registracijos_data)='$men' and DAY(registracijos_data)='$i'");
+        $row3 = mysqli_fetch_assoc($rezKiekis);
+        $average = $row3['kiekis'];
+        $rez[$i] = $average;
+    }
+}
+else {      //default rodo sausio menesi
+    $k = 0;
+    $rez = [];
+    for ($i = 1;$i <= 31;$i++) {
+        $rezKiekis = mysqli_query($dbc,"SELECT COUNT(id_Naudotojas) AS kiekis FROM naudotojas WHERE YEAR(registracijos_data)=2018 and MONTH(registracijos_data)=1 and DAY(registracijos_data)='$i'");
+        $row3 = mysqli_fetch_assoc($rezKiekis);
+        $average = $row3['kiekis'];
+        $rez[$i] = $average;
+    }
+}
+
+$dataPoints = array(
+    array("y" => $rez[1], "label" => "1"),
+    array("y" => $rez[2], "label" => "2"),
+    array("y" => $rez[3], "label" => "3"),
+    array("y" => $rez[4], "label" => "4"),
+    array("y" => $rez[5], "label" => "5"),
+    array("y" => $rez[6], "label" => "6"),
+    array("y" => $rez[7], "label" => "7"),
+    array("y" => $rez[8], "label" => "8"),
+    array("y" => $rez[9], "label" => "9"),
+    array("y" => $rez[10], "label" => "10"),
+    array("y" => $rez[11], "label" => "11"),
+    array("y" => $rez[12], "label" => "12"),
+    array("y" => $rez[13], "label" => "13"),
+    array("y" => $rez[14], "label" => "14"),
+    array("y" => $rez[15], "label" => "15"),
+    array("y" => $rez[16], "label" => "16"),
+    array("y" => $rez[17], "label" => "17"),
+    array("y" => $rez[18], "label" => "18"),
+    array("y" => $rez[19], "label" => "19"),
+    array("y" => $rez[20], "label" => "20"),
+    array("y" => $rez[21], "label" => "21"),
+    array("y" => $rez[21], "label" => "21"),
+    array("y" => $rez[22], "label" => "22"),
+    array("y" => $rez[23], "label" => "23"),
+    array("y" => $rez[24], "label" => "24"),
+    array("y" => $rez[25], "label" => "25"),
+    array("y" => $rez[26], "label" => "26"),
+    array("y" => $rez[27], "label" => "27"),
+    array("y" => $rez[28], "label" => "28"),
+    array("y" => $rez[29], "label" => "29"),
+    array("y" => $rez[30], "label" => "30"),
+    array("y" => $rez[31], "label" => "31")
+);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +83,27 @@ $_SESSION["rez"] = NULL;
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        window.onload = function () {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+
+                axisY: {
+                    title: "Rezervacijų kiekis"
+                },
+                axisX: {
+                    title: "Diena"
+                },
+                backgroundColor: 'transparent',
+                data: [{
+                    type: "line",
+                    dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+                }]
+            });
+            chart.render();
+
+        }
+    </script>
 </head>
 <body>
 <style>
@@ -26,6 +111,7 @@ $_SESSION["rez"] = NULL;
         background: linear-gradient(to bottom right, #B89685, #F8F4E3);
         color: #636b6f;
         font-family: 'Nunito', sans-serif;
+        font-size: 15px;
         font-weight: 200;height: 100%;
         background-attachment: fixed;
         margin: 0;
@@ -40,14 +126,32 @@ $_SESSION["rez"] = NULL;
         border-radius: 12px;
         font-family: 'Nunito', sans-serif;
     }
-    select{
-        color: black;
+    select
+    {
         background-color: #A1B0AB;
+        color: black;
         font-weight: bold;
         font-size: 15px;
-        width: 90px;
+        width: 150px;
+        border-radius: 12px;
+        height: 25px;
+        font-family: 'Nunito', sans-serif;
+    }
+
+    input[value="Rodyti"]
+    {
+        background-color: #A1B0AB;
+        color: black;
+        font-weight: bold;
+        font-size: 15px;
+        width: 100px;
         border-radius: 12px;
         font-family: 'Nunito', sans-serif;
+    }
+
+    h2{
+        text-align: center;
+        font-size: 25px;
     }
 </style>
 <?php if($_SESSION['person']==4) {?>
@@ -77,102 +181,32 @@ $_SESSION["rez"] = NULL;
 </nav>
 <?php }?>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <br>
-            <br>
-            <!-- DROP DOWN-->
-            <form method = "get">
-                <div class="dropdown4">Pasirinkite mėnesį
-                    <select name="month">
-                        <option value="1">Sausis</option>
-                        <option value="2">February</option>
-                        <option value="3">March</option>
-                        <option value="4">April</option>
-                        <option value="5">May</option>
-                        <option value="6">June</option>
-                        <option value="7">July</option>
-                        <option value="8">August</option>
-                        <option value="9">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                    </select><input type="submit" value="Rodyti">
-                </div>
-
-            </form>
-            <br>
-            <head>
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                <script type="text/javascript">
-                    google.charts.load('current', {'packages':['line']});
-                    google.charts.setOnLoadCallback(drawChart);
-
-                    function drawChart() {
-
-                        var data = new google.visualization.DataTable();
-                        data.addColumn('number', 'Diena');
-                        data.addColumn('number', 'Vartotojai');
-
-                        data.addRows([
-                            [1,  37.8],
-                            [2,  30.9],
-                            [3,  25.4],
-                            [4,  11.7],
-                            [5,  11.9],
-                            [6,   8.8],
-                            [7,   7.6],
-                            [8,  12.3],
-                            [9,  16.9],
-                            [10, 12.8],
-                            [11,  5.3],
-                            [12,  6.6],
-                            [13,  4.8],
-                            [14,  4.2],
-                            [15,  16.9],
-                            [16, 12.8],
-                            [17,  5.3],
-                            [18,  6.6],
-                            [19,  4.8],
-                            [20,  4.2],
-                            [21, 12.8],
-                            [22,  5.3],
-                            [23,  6.6],
-                            [24,  4.8],
-                            [25,  4.2],
-                            [26,  5.3],
-                            [27,  6.6],
-                            [28,  4.8],
-                            [29,  4.2],
-                            [30,  4.8],
-                            [31,  4.2],
-                        ]);
-
-                        var options = {
-                            chart: {
-                                title: 'Naujų vartotojų registracijos grafikas'
-                            },
-                            width: 900,
-                            height: 500,
-                            axes: {
-                                x: {
-                                    0: {side: 'top'}
-                                }
-                            },
-                            backgroundColor: 'transparent'
-                        };
-
-                        var chart = new google.charts.Line(document.getElementById('line_top_x'));
-
-                        chart.draw(data, google.charts.Line.convertOptions(options));
-                    }
-                </script>
-            </head>
-            <body>
-            <div id="line_top_x"></div>
-            </body>
+    <form method = "get">
+        <div class="dropdown" required>Pasirinkite metus ir mėnesį
+            <select name = "metai">
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+            </select>
+            <select name = "men">
+                <option value="1">Sausis</option>
+                <option value="2">Vasaris</option>
+                <option value="3">Kovas</option>
+                <option value="4">Balandis</option>
+                <option value="5">Gegužė</option>
+                <option value="6">Birželis</option>
+                <option value="7">Liepa</option>
+                <option value="8">Rugpjūtis</option>
+                <option value="9">Rugsėjis</option>
+                <option value="10">Spalis</option>
+                <option value="11">Lapkritis</option>
+                <option value="12">Gruodis</option>
+            </select>
+            <input name = "submit" type="submit" value="Rodyti">
         </div>
-    </div>
+    </form><h2>Naujų naudotojų registracijos grafikas</h2>
+    <br>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </div>
 </body>
 </html>

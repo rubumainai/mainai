@@ -18,11 +18,12 @@ if (!$dbc) {
 }
 else if(isset($_GET['submit']))
     {
+        $metai = $_GET['metai'];
         $men = $_GET['men'];
         $k = 0;
         $rez = [];
         for ($i = 1;$i <= 31;$i++) {
-            $rezKiekis = mysqli_query($dbc,"SELECT COUNT(id_Rezervacija) AS kiekis FROM rezervacija WHERE MONTH(data)='$men' and DAY(data)='$i'");
+            $rezKiekis = mysqli_query($dbc,"SELECT COUNT(id_Rezervacija) AS kiekis FROM rezervacija WHERE YEAR(data)='$metai' and MONTH(data)='$men' and DAY(data)='$i'");
             $row3 = mysqli_fetch_assoc($rezKiekis);
             $average = $row3['kiekis'];
             $rez[$i] = $average;
@@ -32,7 +33,7 @@ else {      //default rodo sausio menesi
     $k = 0;
     $rez = [];
     for ($i = 1;$i <= 31;$i++) {
-        $rezKiekis = mysqli_query($dbc,"SELECT COUNT(id_Rezervacija) AS kiekis FROM rezervacija WHERE MONTH(data)=1 and DAY(data)='$i'");
+        $rezKiekis = mysqli_query($dbc,"SELECT COUNT(id_Rezervacija) AS kiekis FROM rezervacija WHERE YEAR(data)=2018 and MONTH(data)=1 and DAY(data)='$i'");
         $row3 = mysqli_fetch_assoc($rezKiekis);
         $average = $row3['kiekis'];
         $rez[$i] = $average;
@@ -112,10 +113,11 @@ $dataPoints = array(
         font-family: 'Nunito', sans-serif;
         font-weight: 200;height: 100%;
         background-attachment: fixed;
+        font-size: 15px;
         margin: 0;
         background-attachment: fixed;
     }
-    select[name="men"]
+    select
     {
         background-color: #A1B0AB;
         color: black;
@@ -187,23 +189,27 @@ $dataPoints = array(
 <div class="container">
     <h2>Rezervacijų kiekis per pasirinktą mėnesį</h2>
     <form method = "get">
-    <div class="dropdown" required>Pasirinkite mėnesį
-        <br>
-        <select name = "men">
-            <option value="1">Sausis</option>
-            <option value="2">Vasaris</option>
-            <option value="3">Kovas</option>
-            <option value="4">Balandis</option>
-            <option value="5">Gegužė</option>
-            <option value="6">Birželis</option>
-            <option value="7">Liepa</option>
-            <option value="8">Rugpjūtis</option>
-            <option value="9">Rugsėjis</option>
-            <option value="10">Spalis</option>
-            <option value="11">Lapkritis</option>
-            <option value="12">Gruodis</option>
-        </select><input name = "submit" type="submit" value="Rodyti">
-    </div>
+            <div class="dropdown" required>Pasirinkite metus ir mėnesį
+                <select name = "metai">
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                </select>
+                <select name = "men">
+                    <option value="1">Sausis</option>
+                    <option value="2">Vasaris</option>
+                    <option value="3">Kovas</option>
+                    <option value="4">Balandis</option>
+                    <option value="5">Gegužė</option>
+                    <option value="6">Birželis</option>
+                    <option value="7">Liepa</option>
+                    <option value="8">Rugpjūtis</option>
+                    <option value="9">Rugsėjis</option>
+                    <option value="10">Spalis</option>
+                    <option value="11">Lapkritis</option>
+                    <option value="12">Gruodis</option>
+                </select>
+                <input name = "submit" type="submit" value="Rodyti">
+            </div>
     </form>
 <br>
     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
