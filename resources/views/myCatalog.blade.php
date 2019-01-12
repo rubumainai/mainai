@@ -7,8 +7,12 @@ if (!$dbc) {
     die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
 }
 else {
-    $sql="SELECT * FROM rubas, spalvos, rubu_tipai, rubu_rusys WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and fk_Naudotojasid_Naudotojas=$user";
-    $result = mysqli_query($dbc, $sql);
+   // $sql="SELECT * FROM rubas, spalvos, rubu_tipai, rubu_rusys, rubo_busena WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and busena = id_rubo_busena and fk_Naudotojasid_Naudotojas=$user and busena != 3";
+   // $result = mysqli_query($dbc, $sql);
+
+    $sql2="SELECT DISTINCT * FROM spalvos, rubu_tipai, rubu_rusys, rubas LEFT JOIN zyma on rubas.id_Rubas=zyma.fk_Rubasid_Rubas
+WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and rubas.fk_Naudotojasid_Naudotojas=1 and busena != 3";
+    $result = mysqli_query($dbc, $sql2);
 }
 
 ?>
@@ -114,7 +118,7 @@ else {
             <form class="" action="{{URL::to('/removeItem')}}" method="post">
                 @csrf
                 <input type="hidden" name="fk" value="{{$idd}}">
-                <button type=submit name="button"<?php if ($row['busena'] != '1'){ ?> disabled <?php   } ?>><span class="glyphicon glyphicon-trash"></span> Šalinti</button>
+                <button type=submit name="button"<?php if ($row['busena'] != '1'){ ?> disabled <?php   } ?> onclick="return confirm('Ar tikrai norite ištrinti drabužį?')"><span class="glyphicon glyphicon-trash"></span> Šalinti</button>
             </form></td>
         </tr>
         <?php endwhile;?>
