@@ -28,6 +28,13 @@ class UserController extends Controller
         if($slaptazodis!=$slaptazodis2)
         {
             $_SESSION["error"]="klaida2";
+            $_SESSION["vard"] = $vardas;
+            $_SESSION["pav"] = $pavarde;
+            $_SESSION["past"] = $el_pastas;
+            $_SESSION["data"] = $gimimo_data;
+            $_SESSION["tel"] = $tel;
+            $_SESSION["miest"] = $miestas;
+            $_SESSION["log"] = $prisijungimo_vardas;
             return redirect('/register');
         }
         else{
@@ -45,13 +52,28 @@ class UserController extends Controller
 VALUES ('$vardas', '$pavarde', '$el_pastas', '$prisijungimo_vardas', '$slapt','$gimimo_data','$miestas','$tel',CURRENT_DATE , 1, DEFAULT )";
 
                 if (mysqli_query($dbc, $sql3))
-                {echo "Įrašyta";
+                {
+                    $_SESSION["error"]=NULL;
+                    $_SESSION["vard"] = NULL;
+                    $_SESSION["pav"] = NULL;
+                    $_SESSION["past"] = NULL;
+                    $_SESSION["data"] = NULL;
+                    $_SESSION["tel"] = NULL;
+                    $_SESSION["miest"] = NULL;
+                    $_SESSION["log"] = NULL;
                     return redirect('/login');
                     exit;}
                 else die ("Klaida įrašant:" .mysqli_error($dbc));
             }
             else{
                 $_SESSION["error"]="klaida";
+                $_SESSION["vard"] = $vardas;
+                $_SESSION["pav"] = $pavarde;
+                $_SESSION["past"] = NULL;
+                $_SESSION["data"] = $gimimo_data;
+                $_SESSION["tel"] = $tel;
+                $_SESSION["miest"] = $miestas;
+                $_SESSION["log"] = NULL;
                 return redirect('/register');
             }
 
@@ -73,6 +95,7 @@ VALUES ('$vardas', '$pavarde', '$el_pastas', '$prisijungimo_vardas', '$slapt','$
         if(is_null($row['vardas']))
         {
             $_SESSION["error"]="klaida";
+            $_SESSION["login"] = $prisijungimo_vardas;
             return redirect('/login');
         }
         else
@@ -82,10 +105,12 @@ VALUES ('$vardas', '$pavarde', '$el_pastas', '$prisijungimo_vardas', '$slapt','$
                 if($row['tipas']==2 || $row['tipas']==3)
                 {
                     $_SESSION["error"] = "klaida2";
+                    $_SESSION["login"] = $prisijungimo_vardas;
                     return redirect('/login');
                 }
                 else
                 {
+                    $_SESSION["login"] = NULL;
                     $_SESSION["username"] = $prisijungimo_vardas;
                     $_SESSION["password"] = $slaptazodis;
                     $_SESSION["person"] = $row['tipas'];
@@ -93,12 +118,14 @@ VALUES ('$vardas', '$pavarde', '$el_pastas', '$prisijungimo_vardas', '$slapt','$
                     $_SESSION["surname"] = $row['pavarde'];
                     $_SESSION["el"] = $row['email'];
                     $_SESSION["id"]= $row['id_Naudotojas'];
+                    $_SESSION["error"]= NULL;
                     return redirect('/catalog');
                 }
             }
             else
             {
                 $_SESSION["error"] = "klaida";
+                $_SESSION["login"] = $prisijungimo_vardas;
                 return redirect('/login');
             }
         }
@@ -113,6 +140,10 @@ VALUES ('$vardas', '$pavarde', '$el_pastas', '$prisijungimo_vardas', '$slapt','$
         $_SESSION["username"]=NULL;
         $_SESSION["id"]= NULL;
         $_SESSION["person"] = NULL;
+        $_SESSION["tipas"] = NULL;
+        $_SESSION["spalva"] = NULL;
+        $_SESSION["rusis"] = Null;
+        $_SESSION["rez"] = NULL;
         return redirect('/login');
     }
 
@@ -170,24 +201,45 @@ SET vardas = '$vardas', pavarde = '$pavarde', tel = '$tel', miestas = '$miestas'
 
     public function deleteUser(request $request)
     {
-
         $id=$request->input('button');
         $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
         mysqli_query($dbc,"SET NAMES 'utf8'");
         if (!$dbc) {
             die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
         }
-        $sql="update naudotojas set tipas=3 where id_Naudotojas='$id'";
-        if(mysqli_query($dbc, $sql))
+        $sql1="select * from rubas where fk_Naudotojasid_Naudotojas = '$id' and busena=2";
+        $data = mysqli_query($dbc, $sql1);
+        $row = mysqli_fetch_assoc($data);
+        $sql2="select * from rezervacija where fk_Naudotojasid_Naudotojas = '$id'  and busena!=2 and busena!=4 or skolintojas = '$id' and busena!=2 and busena!=4";
+        $data2 = mysqli_query($dbc, $sql2);
+        $row2 = mysqli_fetch_assoc($data2);
+        if (!is_null($row['pavadinimas']) || !is_null($row2['data']))
         {
-            $_SESSION["name"] = NULL;
-            $_SESSION["surname"] = NULL;
-            $_SESSION["el"] = NULL;
-            $_SESSION["password"]=NULL;
-            $_SESSION["username"]=NULL;
-            $_SESSION["id"]= NULL;
-            $_SESSION["person"] = NULL;
-            return redirect('/');
+            echo '
+            <script>
+            window.onload = function() {
+             alert("Jūs turite aktyvių rezervacijų, paskyros šalinimas negalimas");
+            location.href=("/mainai/public/myProfile");  
+        }
+         </script>';
+            die;
+        }
+        $sql3 = "update rubas set busena = 3 where fk_Naudotojasid_Naudotojas='$id'";
+        if(mysqli_query($dbc, $sql3))
+        {
+            $sql="update naudotojas set tipas=3 where id_Naudotojas='$id'";
+            if(mysqli_query($dbc, $sql))
+            {
+                $_SESSION["name"] = NULL;
+                $_SESSION["surname"] = NULL;
+                $_SESSION["el"] = NULL;
+                $_SESSION["password"]=NULL;
+                $_SESSION["username"]=NULL;
+                $_SESSION["id"]= NULL;
+                $_SESSION["person"] = NULL;
+                return redirect('/');
+            }
+            else die ("Klaida įrašant:" .mysqli_error($dbc));
         }
         else die ("Klaida įrašant:" .mysqli_error($dbc));
     }

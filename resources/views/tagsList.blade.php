@@ -1,5 +1,14 @@
 <?php
 session_start();
+if($_SESSION['person']!=1)
+{
+    echo "<h4  style='color: red'>Jums nepakanka teisių peržiūrėti šį puslapį</h4>";
+    die;
+}
+$_SESSION["tipas"] = NULL;
+$_SESSION["spalva"] = NULL;
+$_SESSION["rusis"] = Null;
+$_SESSION["rez"] = NULL;
 $user=$_SESSION['id'];
 $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
 mysqli_query($dbc,"SET NAMES 'utf8'");
