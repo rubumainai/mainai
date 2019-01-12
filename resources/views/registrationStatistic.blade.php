@@ -1,6 +1,14 @@
 <?php
 session_start();
-
+if($_SESSION['person']!=4)
+{
+    echo "<h4  style='color: red'>Jums nepakanka teisių peržiūrėti šį puslapį</h4>";
+    die;
+}
+$_SESSION["tipas"] = NULL;
+$_SESSION["spalva"] = NULL;
+$_SESSION["rusis"] = Null;
+$_SESSION["rez"] = NULL;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +50,7 @@ session_start();
         font-family: 'Nunito', sans-serif;
     }
 </style>
+<?php if($_SESSION['person']==4) {?>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -51,14 +60,22 @@ session_start();
             <li class="{{Request::is('/catalog')?'active':null }}"><a href="{{url('/catalog')}}">Katalogas</a></li>
             <li class="{{Request::is('/blockedUsersList')?'active':null }}"><a href="{{url('/blockedUsersList')}}">Užblokuoti naudotojai</a></li>
             <li class="{{Request::is('/problemsList')?'active':null }}"><a href="{{url('/problemsList')}}">Nusiskundimai</a></li>
-            <li class="{{Request::is('/registrationList')?'active':null }}"><a href="{{url('/registrationList')}}">Rezervacijos</a></li>
-            <li class="{{Request::is('/registrationStatistic')?'active':null }}"><a href="{{url('/registrationStatistic')}}">Statistika</a></li>
+            <li class="{{Request::is('/activeReservations')?'active':null }}"><a href="{{url('/activeReservations')}}">Rezervacijos</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistika
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{Request::is('/registrationStatistic')?'active':null }}"><a href="{{url('/registrationStatistic')}}">Naudotojai</a></li>
+                    <li class="{{Request::is('/registrationList')?'active':null }}"><a href="{{url('/registrationList')}}">Rezervacijos</a></li>
+                </ul>
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="{{Request::is('/logout')?'active':null}}"><a href="{{url('/logout')}}"><span class="glyphicon glyphicon-log-out"></span></a></li>
         </ul>
     </div>
 </nav>
+<?php }?>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

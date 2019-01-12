@@ -1,3 +1,14 @@
+<?php
+session_start();
+$_SESSION["login"] = NULL;
+$_SESSION["vard"] = NULL;
+$_SESSION["pav"] = NULL;
+$_SESSION["past"] = NULL;
+$_SESSION["data"] = NULL;
+$_SESSION["tel"] = NULL;
+$_SESSION["miest"] = NULL;
+$_SESSION["log"] = NULL;
+?>
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>

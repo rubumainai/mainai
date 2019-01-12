@@ -1,5 +1,14 @@
 <?php
 session_start();
+if($_SESSION['person']!=1 && $_SESSION['person']!=4)
+{
+    echo "<h4  style='color: red'>Turite prisijungti, kad galėtumėte peržiūrėti šį puslapį</h4>";
+    die;
+}
+$_SESSION["tipas"] = NULL;
+$_SESSION["spalva"] = NULL;
+$_SESSION["rusis"] = Null;
+$_SESSION["rez"] = NULL;
 $id = $_GET['itemid'];
 $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
 if (!$dbc) {
@@ -58,6 +67,33 @@ if (!$dbc) {
         font-family: 'Nunito', sans-serif;
     }
 </style>
+<?php if($_SESSION['person']==4) {?>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Mainyk</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="{{Request::is('/catalog')?'active':null }}"><a href="{{url('/catalog')}}">Katalogas</a></li>
+            <li class="{{Request::is('/blockedUsersList')?'active':null }}"><a href="{{url('/blockedUsersList')}}">Užblokuoti naudotojai</a></li>
+            <li class="{{Request::is('/problemsList')?'active':null }}"><a href="{{url('/problemsList')}}">Nusiskundimai</a></li>
+            <li class="{{Request::is('/activeReservations')?'active':null }}"><a href="{{url('/activeReservations')}}">Rezervacijos</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistika
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{Request::is('/registrationStatistic')?'active':null }}"><a href="{{url('/registrationStatistic')}}">Naudotojai</a></li>
+                    <li class="{{Request::is('/registrationList')?'active':null }}"><a href="{{url('/registrationList')}}">Rezervacijos</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="{{Request::is('/logout')?'active':null}}"><a href="{{url('/logout')}}"><span class="glyphicon glyphicon-log-out"></span></a></li>
+        </ul>
+    </div>
+</nav>
+<?php }?>
+<?php if($_SESSION['person']==1) {?>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -90,6 +126,7 @@ if (!$dbc) {
         </ul>
     </div>
 </nav>
+<?php } ?>
 <div class="container">
     <?php
     $row = mysqli_fetch_array($result); ?>
@@ -103,7 +140,7 @@ if (!$dbc) {
         <form class="" action="{{URL::to('/addToBasket')}}" method="post">
             @csrf
             <input type="hidden" name="fk" value="{{$id}}">
-            <button type=submit name="button" <?php if ($row['busena'] != '1'){ ?> disabled <?php   } ?>>Rezervuoti</button> 
+            <button type=submit name="button">Rezervuoti</button>
         </form><br>
         <form class="" action="{{URL::to('/addTag')}}" method="post">
             @csrf

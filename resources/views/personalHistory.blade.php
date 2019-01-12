@@ -1,5 +1,14 @@
 <?php
 session_start();
+if($_SESSION['person']!=1)
+{
+    echo "<h4  style='color: red'>Jums nepakanka teisių peržiūrėti šį puslapį</h4>";
+    die;
+}
+$_SESSION["tipas"] = NULL;
+$_SESSION["spalva"] = NULL;
+$_SESSION["rusis"] = Null;
+$_SESSION["rez"] = NULL;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,6 +87,7 @@ session_start();
             <tr class="header">
                 <th>Data</th>
                 <th>Naudotojas</th>
+                <th>Pavadinimas</th>
                 <th>Rūbo spalva</th>
                 <th>Rūbo tipas</th>
                 <th>Rūbo rūšis</th>
@@ -88,19 +98,22 @@ session_start();
             <tbody>
             <?php
               $id = $_SESSION["id"];
-            $sql="SELECT data, id_Rezervacija, id_rezervacijos_busena, vardas, pavarde,  name,tname, rname, rezname, foto1  from rezervacija as rez, rezervacijos_busena, rubas as rub, naudotojas, spalvos, rubu_tipai, rubu_rusys where rez.fk_Naudotojasid_Naudotojas='$id' and id_rezervacijos_busena=rez.busena and rez.fk_Rubasid_Rubas = rub.id_Rubas and
-rub.fk_Naudotojasid_Naudotojas = rez.skolintojas and id_Naudotojas = rez.skolintojas and rub.tipas = id_rubu_tipai and rub.rusis = id_rubu_rusys and rub.spalva = id_spalvos and rub.busena!=3";
+            $sql="SELECT data, pavadinimas, id_Naudotojas, id_Rubas, id_Rezervacija, id_rezervacijos_busena, vardas, pavarde,  name,tname, rname, rezname, foto1  from rezervacija as rez, rezervacijos_busena, rubas as rub, naudotojas, spalvos, rubu_tipai, rubu_rusys where rez.fk_Naudotojasid_Naudotojas='$id' and id_rezervacijos_busena=rez.busena and rez.fk_Rubasid_Rubas = rub.id_Rubas and
+rub.fk_Naudotojasid_Naudotojas = rez.skolintojas and id_Naudotojas = rez.skolintojas and rub.tipas = id_rubu_tipai and rub.rusis = id_rubu_rusys and rub.spalva = id_spalvos and rub.busena!=3
+order by data desc";
             $connect = mysqli_connect("localhost", "root", "", "mainai");
             mysqli_query($connect,"SET NAMES 'utf8'");
             $search_result = mysqli_query($connect, $sql);
             while($row = mysqli_fetch_array($search_result)) :?>
             <tr>
-                <td><?php echo $row['data'];$idd=$row['id_Rezervacija'];?></td>
-                    <td><?php echo $row['vardas'];?> <?php echo $row['pavarde'];?></td>
-                    <td><?php echo $row['name'];?></td>
-                    <td><?php echo $row['tname'];?></td>
-                    <td><?php echo $row['rname'];?></td>
-                    <td><?php echo $row['rezname'];?></td>
+                <td><?php echo $row['data'];$idd=$row['id_Rezervacija']; $id = $row['id_Rubas']; $id2=$row['id_Naudotojas'];
+                    $vardas = $row['vardas']; $pavarde  = $row['pavarde']; $pavadinimas = $row['pavadinimas']?></td>
+                <td><?php echo" <a href=../public/otherProfile?userid=",urlencode($id2),">{$vardas} {$pavarde}</a> "?></td>
+                <td><?php echo" <a href=../public/viewItem?itemid=",urlencode($id),">{$pavadinimas} </a> "?></td>
+                <td><?php echo $row['name'];?></td>
+                <td><?php echo $row['tname'];?></td>
+                <td><?php echo $row['rname'];?></td>
+                <td><?php echo $row['rezname'];?></td>
                 <?php if($row['id_rezervacijos_busena']==1) {?>
                 <td><button type=submit class="mygt" name="grazinti" value="{{$idd}}" onclick="return confirm('Ar tikrai norite grąžinti rūbą?')">Grąžinti rūbą</button></td>
                 <?php ;}?>
@@ -117,6 +130,7 @@ rub.fk_Naudotojasid_Naudotojas = rez.skolintojas and id_Naudotojas = rez.skolint
             <tr class="header">
                 <th>Data</th>
                 <th>Naudotojas</th>
+                <th>Pavadinimas</th>
                 <th>Rūbo spalva</th>
                 <th>Rūbo tipas</th>
                 <th>Rūbo rūšis</th>
@@ -127,15 +141,18 @@ rub.fk_Naudotojasid_Naudotojas = rez.skolintojas and id_Naudotojas = rez.skolint
             <tbody>
             <?php
             $id = $_SESSION["id"];
-            $sql="SELECT data, id_Rezervacija, id_rezervacijos_busena, vardas, pavarde,  name,tname, rname, rezname, foto1  from rezervacija as rez, rezervacijos_busena, rubas as rub, naudotojas, spalvos, rubu_tipai, rubu_rusys where rez.fk_Naudotojasid_Naudotojas='$id' and id_rezervacijos_busena=rez.busena and rez.fk_Rubasid_Rubas = rub.id_Rubas and
-rub.fk_Naudotojasid_Naudotojas = rez.skolintojas and id_Naudotojas = rez.skolintojas and rub.tipas = id_rubu_tipai and rub.rusis = id_rubu_rusys and rub.spalva = id_spalvos and rub.busena!=3";
+            $sql="SELECT data, pavadinimas, id_Naudotojas, id_Rubas, id_Rezervacija, id_rezervacijos_busena, vardas, pavarde,  name,tname, rname, rezname, foto1  from rezervacija as rez, rezervacijos_busena, rubas as rub, naudotojas, spalvos, rubu_tipai, rubu_rusys where rez.skolintojas='$id' and id_rezervacijos_busena=rez.busena and rez.fk_Rubasid_Rubas = rub.id_Rubas and
+rub.fk_Naudotojasid_Naudotojas = rez.skolintojas and id_Naudotojas = rez.fk_Naudotojasid_Naudotojas and rub.tipas = id_rubu_tipai and rub.rusis = id_rubu_rusys and rub.spalva = id_spalvos and rub.busena!=3
+order by data desc";
             $connect = mysqli_connect("localhost", "root", "", "mainai");
             mysqli_query($connect,"SET NAMES 'utf8'");
             $search_result = mysqli_query($connect, $sql);
             while($row = mysqli_fetch_array($search_result)) :?>
             <tr>
-                <td><?php echo $row['data'];$idd=$row['id_Rezervacija'];?></td>
-                <td><?php echo $row['vardas'];?> <?php echo $row['pavarde'];?></td>
+                <td><?php echo $row['data'];$idd=$row['id_Rezervacija']; $id = $row['id_Rubas']; $id2=$row['id_Naudotojas'];
+                $vardas = $row['vardas']; $pavarde  = $row['pavarde']; $pavadinimas = $row['pavadinimas']?></td>
+                <td><?php echo" <a href=../public/otherProfile?userid=",urlencode($id2),">{$vardas} {$pavarde}</a> "?></td>
+                <td><?php echo" <a href=../public/viewItem?itemid=",urlencode($id),">{$pavadinimas} </a> "?></td>
                 <td><?php echo $row['name'];?></td>
                 <td><?php echo $row['tname'];?></td>
                 <td><?php echo $row['rname'];?></td>
@@ -147,6 +164,7 @@ rub.fk_Naudotojasid_Naudotojas = rez.skolintojas and id_Naudotojas = rez.skolint
                 <?php if($row['id_rezervacijos_busena']==5) {?>
                 <td><button type=submit class="mygt" name="patvirtinti_graz" value="{{$idd}}" style="width: 170px" onclick="return confirm('Ar tikrai norite patvirtinti grąžinimą?')">Patvirtinti grąžinimą</button></td>
                 <?php ;}?>
+                <input type="hidden" name="rubas" value="{{$id}}">
             </tr>
             <?php endwhile;?>
             </tbody>
