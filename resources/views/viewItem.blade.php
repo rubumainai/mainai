@@ -70,7 +70,7 @@ if (!$dbc) {
 
     .foto {
         position: absolute;
-        left: 20px;
+        left: 100px;
     }
 
 </style>
