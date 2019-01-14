@@ -52,17 +52,19 @@ WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and ruba
     }
 
     input{
-        background: transparent;
+        background-color: #A1B0AB;
         border-radius: 12px;
         width: 100px;
-        color: #636b6f;
+        color: black;
+        font-weight: bold;
     }
 
     button{
-        background: transparent;
+        background-color: #A1B0AB;
         border-radius: 12px;
         width: 100px;
-        color: #636b6f;
+        color: black;
+        font-weight: bold;
     }
 </style>
 <nav class="navbar navbar-inverse">

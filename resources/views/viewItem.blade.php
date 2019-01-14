@@ -28,7 +28,7 @@ if (!$dbc) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 <body>
 <style>
     html, body {
@@ -42,8 +42,8 @@ if (!$dbc) {
     }
 
     img{
-        height: 300px;
-        width: 300px;
+        height: 150px;
+        width: 150px;
     }
 
     button
@@ -67,7 +67,14 @@ if (!$dbc) {
         height: 25px;
         font-family: 'Nunito', sans-serif;
     }
+
+    .foto {
+        position: absolute;
+        left: 20px;
+    }
+
 </style>
+</head>
 <?php if($_SESSION['person']==4) {?>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -120,27 +127,63 @@ if (!$dbc) {
     </div>
 </nav>
 <?php } ?>
+
 <div class="container">
     <?php
     $row = mysqli_fetch_array($result); ?>
     <h3><?php echo $row['pavadinimas'];$idd=$row['fk_Naudotojasid_Naudotojas']; ?></h3><br>
-    <h4><img src="../public/images/<?php echo $row['foto1']?>"></h4>
     <h4><?php echo $row['aprasymas']; ?></h4><br>
     <h4>Spalva <?php echo $row['name']; ?></h4><br>
     <h4>Rūšis <?php echo $row['rname']; ?></h4><br>
     <h4>Tipas <?php echo $row['tname']; ?></h4><br>
-        <h4><?php echo" <a href=../public/otherProfile?userid=",urlencode($idd),"><input type=button id='$idd' value='Savininko profilis' ></a> "?></h4>
-        <form class="" action="{{URL::to('/addToBasket')}}" method="post">
-            @csrf
-            <input type="hidden" name="fk" value="{{$id}}">
-            <button type=submit name="button">Rezervuoti</button>
-        </form><br>
-        <form class="" action="{{URL::to('/addTag')}}" method="post">
-            @csrf
-            <input type="hidden" name="fk" value="{{$id}}">
-            <button type=submit name="button">Pažymėti</button>
-        </form>
+</div>
+<div class="foto">
+        <?php if($row['foto1'] != NULL)
+        {
+        ?>
+        <td>
+            <a href="../public/images/<?php echo $row['foto1']?>"><img src="../public/images/<?php echo $row['foto1']?>"></a>
 
+        <?php
+        }?>
+        <?php if($row['foto2'] != NULL)
+        {
+        ?>
+        <td>
+            <a href="../public/images/<?php echo $row['foto2']?>"><img id="myImg2" src="../public/images/<?php echo $row['foto2']?>"></a>
+        <?php
+        }?>
+        <?php if($row['foto3'] != NULL)
+        {
+        ?>
+        <td>
+            <a href="../public/images/<?php echo $row['foto3']?>"><img id="myImg" src="../public/images/<?php echo $row['foto3']?>"></a>
+        <?php
+        }?>
+        <?php if($row['foto4'] != NULL)
+        {
+        ?>
+        <td>
+            <a href="../public/images/<?php echo $row['foto4']?>"><img id="myImg" src="../public/images/<?php echo $row['foto4']?>"></a>
+        <?php
+        }?>
+        <?php if($_SESSION["id"]!= $idd)
+        {
+        ?>
+        <td>
+            <h4><?php echo" <a href=../public/otherProfile?userid=",urlencode($idd),"><input type=button id='$idd' value='Savininko profilis' ></a> "?></h4>
+            <form class="" action="{{URL::to('/addToBasket')}}" method="post">
+                @csrf
+                <input type="hidden" name="fk" value="{{$id}}">
+                <button type=submit name="button">Rezervuoti</button>
+            </form><br>
+            <form class="" action="{{URL::to('/addTag')}}" method="post">
+                @csrf
+                <input type="hidden" name="fk" value="{{$id}}">
+                <button type=submit name="button">Pažymėti</button>
+            </form></td>
+        <?php
+        }?>
 </div>
 </body>
 </html>
