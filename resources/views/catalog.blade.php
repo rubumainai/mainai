@@ -130,33 +130,33 @@ if($_SESSION['person']!=1 && $_SESSION['person']!=4)
     <div class="dropdown2" >Rūšis
         <select name="rusis" class="dropdown2" id="rusis">
             <option value="0"></option>
-            <option value="1" <?php echo ($_SESSION["rusis"] == 1)?"selected":"" ?>>Vaikiškas</option>
-            <option value="2" <?php echo ($_SESSION["rusis"] == 2)?"selected":"" ?>>Vyriškas</option>
-            <option value="3" <?php echo ($_SESSION["rusis"] == 3)?"selected":"" ?>>Moteriškas</option>
+            <option value="1" <?php if(isset($_SESSION["rusis"]))echo ($_SESSION["rusis"] == 1)?"selected":"" ?>>Vaikiškas</option>
+            <option value="2" <?php if(isset($_SESSION["rusis"])) echo ($_SESSION["rusis"] == 2)?"selected":"" ?>>Vyriškas</option>
+            <option value="3" <?php if(isset($_SESSION["rusis"])) echo ($_SESSION["rusis"] == 3)?"selected":"" ?>>Moteriškas</option>
         </select>
     Spalva
         <select name="spalva" class="dropdown2" id="spalva">
             <option value="0"></option>
-            <option value="1" <?php echo ($_SESSION["spalva"] == 1)?"selected":"" ?>>Raudonas</option>
-            <option value="2" <?php echo ($_SESSION["spalva"] == 2)?"selected":"" ?>>Geltona</option>
-            <option value="3" <?php echo ($_SESSION["spalva"] == 3)?"selected":"" ?>>Mėlyna</option>
-            <option value="4" <?php echo ($_SESSION["spalva"] == 4)?"selected":"" ?>>Žalia</option>
-            <option value="5" <?php echo ($_SESSION["spalva"] == 5)?"selected":"" ?>>Violetinė</option>
-            <option value="6" <?php echo ($_SESSION["spalva"] == 6)?"selected":"" ?>>Oranžinė</option>
-            <option value="7" <?php echo ($_SESSION["spalva"] == 7)?"selected":"" ?>>Juoda</option>
-            <option value="8" <?php echo ($_SESSION["spalva"] == 8)?"selected":"" ?>>Balta</option>
+            <option value="1" <?php if(isset($_SESSION["spalva"])) echo ($_SESSION["spalva"] == 1)?"selected":"" ?>>Raudonas</option>
+            <option value="2" <?php if(isset($_SESSION["spalva"])) echo ($_SESSION["spalva"] == 2)?"selected":"" ?>>Geltona</option>
+            <option value="3" <?php if(isset($_SESSION["spalva"])) echo ($_SESSION["spalva"] == 3)?"selected":"" ?>>Mėlyna</option>
+            <option value="4" <?php if(isset($_SESSION["spalva"])) echo ($_SESSION["spalva"] == 4)?"selected":"" ?>>Žalia</option>
+            <option value="5" <?php if(isset($_SESSION["spalva"])) echo ($_SESSION["spalva"] == 5)?"selected":"" ?>>Violetinė</option>
+            <option value="6" <?php if(isset($_SESSION["spalva"])) echo ($_SESSION["spalva"] == 6)?"selected":"" ?>>Oranžinė</option>
+            <option value="7" <?php if(isset($_SESSION["spalva"])) echo ($_SESSION["spalva"] == 7)?"selected":"" ?>>Juoda</option>
+            <option value="8" <?php if(isset($_SESSION["spalva"])) echo ($_SESSION["spalva"] == 8)?"selected":"" ?>>Balta</option>
         </select>
         Tipas
         <select name="tipas" class="dropdown2" id="tipas">
             <option value="0"></option>
-            <option value="1" <?php echo ($_SESSION["tipas"] == 1)?"selected":"" ?>>Aksesuaras</option>
-            <option value="2" <?php echo ($_SESSION["tipas"] == 2)?"selected":"" ?>>Batai</option>
-            <option value="3" <?php echo ($_SESSION["tipas"] == 3)?"selected":"" ?>>Rankinė</option>
-            <option value="4" <?php echo ($_SESSION["tipas"] == 4)?"selected":"" ?>>Suknelė</option>
-            <option value="5" <?php echo ($_SESSION["tipas"] == 5)?"selected":"" ?>>Sijonas</option>
-            <option value="6" <?php echo ($_SESSION["tipas"] == 6)?"selected":"" ?>>Kelnės</option>
-            <option value="7" <?php echo ($_SESSION["tipas"] == 7)?"selected":"" ?>>Švarkas</option>
-            <option value="8" <?php echo ($_SESSION["tipas"] == 8)?"selected":"" ?>>Palaidinė</option>
+            <option value="1" <?php if(isset($_SESSION["tipas"])) echo ($_SESSION["tipas"] == 1)?"selected":"" ?>>Aksesuaras</option>
+            <option value="2" <?php if(isset($_SESSION["tipas"])) echo ($_SESSION["tipas"] == 2)?"selected":"" ?>>Batai</option>
+            <option value="3" <?php if(isset($_SESSION["tipas"])) echo ($_SESSION["tipas"] == 3)?"selected":"" ?>>Rankinė</option>
+            <option value="4" <?php if(isset($_SESSION["tipas"])) echo ($_SESSION["tipas"] == 4)?"selected":"" ?>>Suknelė</option>
+            <option value="5" <?php if(isset($_SESSION["tipas"])) echo ($_SESSION["tipas"] == 5)?"selected":"" ?>>Sijonas</option>
+            <option value="6" <?php if(isset($_SESSION["tipas"])) echo ($_SESSION["tipas"] == 6)?"selected":"" ?>>Kelnės</option>
+            <option value="7" <?php if(isset($_SESSION["tipas"])) echo ($_SESSION["tipas"] == 7)?"selected":"" ?>>Švarkas</option>
+            <option value="8" <?php if(isset($_SESSION["tipas"])) echo ($_SESSION["tipas"] == 8)?"selected":"" ?>>Palaidinė</option>
         </select>
         <input type="submit" name="filtruot" value="Rodyti" placeholder="Rod">
         <input type="submit" name="valyti" value="Valyti filtrą"></div>
