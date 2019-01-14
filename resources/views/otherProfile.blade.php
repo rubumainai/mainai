@@ -11,6 +11,7 @@ $_SESSION["rusis"] = Null;
 $_SESSION["rez"] = NULL;
 $id = $_GET['userid'];
 $dbc = mysqli_connect('localhost', 'root', '', 'mainai');
+mysqli_query($dbc, "SET NAMES 'utf8'");
 if (!$dbc) {
     die ("Negaliu prisijungti prie MySQL:" . mysqli_error($dbc));
 }
@@ -20,7 +21,7 @@ $result = mysqli_query($dbc, $sql);
 $sql2="SELECT * FROM rekomendacija WHERE fk_Naudotojasid_Naudotojas=$id";
 $result2 = mysqli_query($dbc, $sql2);
 
-$result3= mysqli_query($dbc,"SELECT AVG(vertinimas) AS vert FROM rekomendacija");
+$result3= mysqli_query($dbc,"SELECT AVG(vertinimas) AS vert FROM rekomendacija where fk_Naudotojasid_Naudotojas=$id");
 $row3 = mysqli_fetch_assoc($result3);
 $average = $row3['vert'];
 ?>
@@ -40,9 +41,10 @@ $average = $row3['vert'];
         background: linear-gradient(to bottom right, #B89685, #F8F4E3);
         color: #636b6f;
         font-family: 'Nunito', sans-serif;
-        font-weight: 200;height: 100%;
-        background-attachment: fixed;
+        font-weight: 200;
         margin: 0;
+        height: 100%;
+        background-attachment: fixed;
     }
 
     .dropdown{

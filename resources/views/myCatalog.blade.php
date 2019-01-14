@@ -19,7 +19,9 @@ else {
    // $sql="SELECT * FROM rubas, spalvos, rubu_tipai, rubu_rusys, rubo_busena WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and busena = id_rubo_busena and fk_Naudotojasid_Naudotojas=$user and busena != 3";
    // $result = mysqli_query($dbc, $sql);
 
-    $sql2="SELECT DISTINCT * FROM spalvos, rubu_tipai, rubu_rusys, rubas LEFT JOIN zyma on rubas.id_Rubas=zyma.fk_Rubasid_Rubas
+  //  $sql2="SELECT DISTINCT * FROM spalvos, rubu_tipai, rubu_rusys, rubas LEFT JOIN zyma on rubas.id_Rubas=zyma.fk_Rubasid_Rubas
+//WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and rubas.fk_Naudotojasid_Naudotojas=$user and busena != 3";
+    $sql2 = "SELECT * FROM spalvos, rubu_tipai, rubu_rusys, rubas
 WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and rubas.fk_Naudotojasid_Naudotojas=$user and busena != 3";
     $result = mysqli_query($dbc, $sql2);
 }
@@ -47,7 +49,7 @@ WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and ruba
     }
 
     img {
-        width: 150px;
+        width: 120px;
         height: 150px;
     }
 
