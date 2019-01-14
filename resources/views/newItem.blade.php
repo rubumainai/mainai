@@ -173,8 +173,10 @@ $_SESSION["rez"] = NULL;
             <input type="file" name="image" id="image" required/><br>
             <input type="file" name="image2" id="image2" /><br>
             <input type="file" name="image3" id="image3" /><br>
-            <input type="file" name="image4" id="image4" /><br>
+            <input type="file" name="image4" id="image4"  /><br>
             <button type=submit name="button" >Išsaugoti</button>
+            <br>
+            <br>
         </form>
 </div>
 </div>
