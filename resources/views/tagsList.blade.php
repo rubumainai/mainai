@@ -43,7 +43,7 @@ else {
     }
 
     img {
-        width: 150px;
+        width: 120px;
         height: 150px;
     }
 
@@ -102,10 +102,10 @@ else {
         </tr>
         </thead>
         <tbody>
-        <?php
+        <?php  $nr = 1;
         while($row = mysqli_fetch_array($result)) :?>
         <?php $array =array() ?>
-        <td><?php echo $row['id_Rubas'];$idd =$row['id_Rubas'];?></td>
+        <td><?php echo $nr;$idd =$row['id_Rubas'];?></td>
         <td><img src="../public/images/<?php echo $row['foto1']?>"></td>
         <td><?php echo $row['pavadinimas'];?></td>
         <td><?php echo $row['aprasymas'];?></td>
@@ -120,6 +120,7 @@ else {
                 <button type=submit name="button"><span class="glyphicon glyphicon-trash"></span> Šalinti</button>
             </form></td>
         </tr>
+        <?php $nr++;?>
         <?php endwhile;?>
         </tbody>
     </table>

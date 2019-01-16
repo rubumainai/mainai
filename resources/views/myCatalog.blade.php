@@ -108,10 +108,10 @@ WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and ruba
         </tr>
         </thead>
         <tbody>
-        <?php
+        <?php   $nr = 1;
         while($row = mysqli_fetch_array($result)) :?>
         <?php $array =array() ?>
-        <td><?php echo $row['id_Rubas'];$idd =$row['id_Rubas'];?></td>
+        <td><?php echo $nr;$idd =$row['id_Rubas'];?></td>
         <td><img src="../public/images/<?php echo $row['foto1']?>"></td>
         <td><?php echo $row['pavadinimas'];?></td>
         <td><?php echo $row['aprasymas'];?></td>
@@ -126,6 +126,7 @@ WHERE spalva=id_spalvos and tipas=id_rubu_tipai and rusis=id_rubu_rusys and ruba
                 <button type=submit name="button"<?php if ($row['busena'] != '1'){ ?> disabled <?php   } ?> onclick="return confirm('Ar tikrai norite ištrinti drabužį?')"><span class="glyphicon glyphicon-trash"></span> Šalinti</button>
             </form></td>
         </tr>
+        <?php $nr++;?>
         <?php endwhile;?>
         </tbody>
     </table>

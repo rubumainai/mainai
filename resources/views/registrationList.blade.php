@@ -111,10 +111,9 @@ $dataPoints = array(
         background: linear-gradient(to bottom right, #B89685, #F8F4E3);
         color: #636b6f;
         font-family: 'Nunito', sans-serif;
-        font-weight: 200;height: 100%;
-        background-attachment: fixed;
-        font-size: 15px;
+        font-weight: 200;
         margin: 0;
+        height: 100%;
         background-attachment: fixed;
     }
     select
@@ -187,7 +186,7 @@ $dataPoints = array(
 </nav>
 <?php }?>
 <div class="container">
-    <h2>Rezervacijų kiekis per pasirinktą mėnesį</h2>
+
     <form method = "get">
             <div class="dropdown" required>Pasirinkite metus ir mėnesį
                 <select name = "metai">
@@ -210,7 +209,7 @@ $dataPoints = array(
                 </select>
                 <input name = "submit" type="submit" value="Rodyti">
             </div>
-    </form>
+    </form><h2>Rezervacijų kiekis per pasirinktą mėnesį</h2>
 <br>
     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

@@ -111,10 +111,10 @@ $dataPoints = array(
         background: linear-gradient(to bottom right, #B89685, #F8F4E3);
         color: #636b6f;
         font-family: 'Nunito', sans-serif;
-        font-size: 15px;
-        font-weight: 200;height: 100%;
-        background-attachment: fixed;
+        font-weight: 200;
         margin: 0;
+        height: 100%;
+        background-attachment: fixed;
     }
     input
     {

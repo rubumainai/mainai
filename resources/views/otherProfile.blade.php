@@ -47,11 +47,6 @@ $average = $row3['vert'];
         background-attachment: fixed;
     }
 
-    .dropdown{
-        font-family: 'Nunito', sans-serif;
-        font-size: 19px;
-    }
-
     select
     {
         border-radius: 18px;
@@ -167,7 +162,8 @@ $average = $row3['vert'];
     <h4>Miestas: <?php echo $row['miestas']; ?></h4><br>
 
     <form class="" action="{{URL::to('/addRecomendation')}}" method="post">
-        <div class="dropdown" required>Pasirinkite balą
+        <div class="dropdown" required style=" font-family: 'Nunito', sans-serif;
+        font-size: 19px">Pasirinkite balą
             <br>
             <select name = "balas">
                 <option value="1">1</option>
